@@ -84,7 +84,7 @@ public class ShowCoursePeopleController {
 			PaginationFilter paginationFilter = new PaginationFilter(
 					command.getFirstRecord() != null ? command.getFirstRecord() : 0, 
 					command.getPeopleForPage() != null ? command.getPeopleForPage() : PEOPLE_FOR_PAGE, 
-					command.getPageTotal());
+					null);
 			
 			if (paginationFilter.getElementsForPage() == null) {
 				paginationFilter.setElementsForPage(PEOPLE_FOR_PAGE);

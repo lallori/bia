@@ -75,6 +75,8 @@ public class Image implements Serializable {
 	private String insertLet;
 	@Column (name="\"imageName\"", length=45, nullable=false)
 	private String imageName;
+	@Column (name="\"imageTitle\"", length=300, nullable=true)
+	private String imageTitle;
 	@Enumerated(EnumType.STRING) 
 	@Column (name="\"imageType\"", length=1, nullable=false)
 	private ImageType imageType;
@@ -177,6 +179,20 @@ public class Image implements Serializable {
 		return imageName;
 	}
 	
+	/**
+	 * @param imageTitle the imageTitle to set
+	 */
+	public void setImageTitle(String imageTitle) {
+		this.imageTitle = imageTitle;
+	}
+	
+	/**
+	 * @return the imageTitle
+	 */
+	public String getImageTitle() {
+		return imageTitle;
+	}
+
 	/**
 	 * @param imageType the imageType to set
 	 */

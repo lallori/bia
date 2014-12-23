@@ -5,15 +5,14 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 			
 		<security:authorize ifAnyGranted="ROLE_TEACHERS" ifNotGranted="ROLE_ADMINISTRATORS">
-			<li><a href="<c:url value="/teaching/ShowTeachingModule.do" />" id="teachingModule">Teaching Module</a></li>
+			<li><a href="<c:url value='/teaching/ShowTeachingModule.do' />" id="teachingModule">Teaching Module</a></li>
 			
 			<script type="text/javascript">
-			$j(document).ready(function(){
-				$j("#teachingModule").click(function(){
-					Modalbox.show($j(this).attr("href"), {title: "Teaching Module", width: 270, height: 220});
-					return false;
-				}						
-				);
-			});
+				$j(document).ready(function() {
+					$j("#teachingModule").click(function() {
+						Modalbox.show($j(this).attr("href"), {title: "TEACHING MODULE", width: 270, height: 240});
+						return false;
+					});
+				});
 			</script>
-		</security:authorize>		
+		</security:authorize>

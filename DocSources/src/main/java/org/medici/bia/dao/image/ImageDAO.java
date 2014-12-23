@@ -361,9 +361,21 @@ public interface ImageDAO extends Dao<Integer, Image> {
 	 */
 	Image findVolumeSpine(Integer volNum, String volLetExt) throws PersistenceException;
 	
+	/**
+	 * This method returns a the paginate {@link Image}s of a volume.
+	 * 
+	 * @param paginationFilter the pagination filter
+	 * @param volNum the volume number
+	 * @param volLetExt the volume letter extension
+	 * @param imageTitleFilters an array of image title filters (they are considered in an AND query clause)
+	 * @return a page of {@link Image}s
+	 * @throws PersistenceException
+	 */
+	Page getVolumeImages(PaginationFilter paginationFilter, Integer volNum, String volLetExt, String[] imageTitleFilter) throws PersistenceException;
+	
 	
 	/**
-	 * This methods checks if a volume contains inserts or not.
+	 * This method checks if a volume contains inserts or not.
 	 * 
 	 * @param volNum MDP Volume identifier
 	 * @param volLetExt MDP Volume extension

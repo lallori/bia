@@ -2014,3 +2014,13 @@ INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`,
 -- user personal notes for teaching module
 INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowPersonalNotes', 'template.partialDOM');
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowPersonalNotes', 'main', '/WEB-INF/jsp/teaching/ShowPersonalNotes.jsp', 0);
+
+-- upload images for teaching module
+INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('iipimage.upload.path', 'Remote server image upload path', '/data/imgtmp/');
+INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('iipimage.upload.storagePathNumber', 'Remote server image storage path number', '2');
+
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowManageImagesForLessons', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowUploadNewImages', 'template.partialDOM');
+
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowManageImagesForLessons', 'main', '/WEB-INF/jsp/teaching/ShowManageImagesForLessons.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowUploadNewImages', 'main', '/WEB-INF/jsp/teaching/ShowUploadNewImages.jsp', 0);

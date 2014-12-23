@@ -168,16 +168,10 @@ public class TeachingServiceImpl implements TeachingService {
 		this.courseDAO = courseDAO;
 	}
 
-	/**
-	 * @return the coursePeopleDAO
-	 */
 	public CoursePeopleDAO getCoursePeopleDAO() {
 		return coursePeopleDAO;
 	}
 
-	/**
-	 * @param coursePeopleDAO the coursePeopleDAO to set
-	 */
 	public void setCoursePeopleDAO(CoursePeopleDAO coursePeopleDAO) {
 		this.coursePeopleDAO = coursePeopleDAO;
 	}
@@ -286,16 +280,10 @@ public class TeachingServiceImpl implements TeachingService {
 		this.userDAO = userDAO;
 	}
 	
-	/**
-	 * @return the userPersonalNotesDAO
-	 */
 	public UserPersonalNotesDAO getUserPersonalNotesDAO() {
 		return userPersonalNotesDAO;
 	}
 
-	/**
-	 * @param userPersonalNotesDAO the userPersonalNotesDAO to set
-	 */
 	public void setUserPersonalNotesDAO(UserPersonalNotesDAO userPersonalNotesDAO) {
 		this.userPersonalNotesDAO = userPersonalNotesDAO;
 	}
@@ -1390,6 +1378,18 @@ public class TeachingServiceImpl implements TeachingService {
 			}
 			return topics;
 		} catch(Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page getImagesForLessons(PaginationFilter paginationFilter, String[] titleFilters) throws ApplicationThrowable {
+		try {
+			return getImageDAO().getVolumeImages(paginationFilter, 0, null, titleFilters);
+		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
 	}

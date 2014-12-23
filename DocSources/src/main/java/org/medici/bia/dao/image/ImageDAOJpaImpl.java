@@ -47,6 +47,7 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.pagination.VolumeExplorer;
 import org.medici.bia.common.util.DocumentUtils;
 import org.medici.bia.common.util.ImageUtils;
+import org.medici.bia.common.util.PageUtils;
 import org.medici.bia.common.util.VolumeUtils;
 import org.medici.bia.common.volume.FoliosInformations;
 import org.medici.bia.common.volume.VolumeInsert;
@@ -967,6 +968,51 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Page getVolumeImages(PaginationFilter paginationFilter,  Integer volNum, String volLetExt, String[] imageTitleFilters) throws PersistenceException {
+		Page page = new Page(paginationFilter);
+		
+		String jpql = "FROM Image WHERE volNum = :volNum AND volLetExt "
+				+ (volLetExt != null ? "= :volLetExt" : "IS NULL");
+		if (imageTitleFilters != null) {
+			for (int i = 0; i < imageTitleFilters.length; i++) {
+				jpql += " AND imageTitle LIKE '%" + imageTitleFilters[i] + "%'";
+			}
+		}
+		
+		Query query = null;
+		
+		if (paginationFilter.getTotal() == null) {
+			String countQuery = "SELECT COUNT(*) " + jpql;
+			query = getEntityManager().createQuery(countQuery);
+			query.setParameter("volNum", volNum);
+			if (volLetExt != null) {
+				query.setParameter("volLetExt", volLetExt);
+			}
+			page.setTotal(new Long((Long) query.getSingleResult()));
+			page.setTotalPages(PageUtils.calculeTotalPages(page.getTotal(), page.getElementsForPage()));
+		} else {
+			page.setTotal(paginationFilter.getTotal());
+			page.setTotalPages(PageUtils.calculeTotalPages(paginationFilter.getTotal(), paginationFilter.getElementsForPage()));
+		}
+		
+		query = getEntityManager().createQuery(jpql + getOrderByQuery(paginationFilter.getSortingCriterias()));
+		query.setParameter("volNum", volNum);
+		if (volLetExt != null) {
+			query.setParameter("volLetExt", volLetExt);
+		}
+		
+		query.setFirstResult(PageUtils.calculeStart(page.getThisPage(), page.getElementsForPage()));
+		query.setMaxResults(paginationFilter.getLength());
+		
+		page.setList(query.getResultList());
+		
+		return page;
 	}
 	
 	/**

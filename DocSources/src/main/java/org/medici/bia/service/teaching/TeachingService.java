@@ -424,6 +424,16 @@ public interface TeachingService {
 	List<ForumTopic> getDocumentTopicsFromCourse(Integer entryId, Integer courseId) throws ApplicationThrowable;
 	
 	/**
+	 * This method returns the paginated {@link Image}s of the lessons volume.
+	 * 
+	 * @param paginationFilter the pagination filter
+	 * @param titleFilters an array of image title filters (they are considered in an AND query clause)
+	 * @return the paginated {@link Image}s
+	 * @throws ApplicationThrowable
+	 */
+	Page getImagesForLessons(PaginationFilter paginationFilter, String[] titleFilters) throws ApplicationThrowable;
+	
+	/**
 	 * This method returns the last active course.
 	 * 
 	 * @return the last active course
