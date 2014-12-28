@@ -19,11 +19,9 @@
 		        <a id="createCourses" class="button_large" href="<c:url value='/teaching/ShowCreateCourse.do' />"><fmt:message key="teaching.showTeachingModuleModalWindow.createCourse"/></a>
 			</div>
 			
-			<!-- Work in progress
 			<div id="uploadImagesDiv" class="adminModalButtonContainer">
 				<a id="uploadImages" class="button_large" href="<c:url value='/teaching/ShowManageImagesForLessons.do' />">Manage Images For Lessons</a>
 			</div>
-			-->
 		    
 			<input id="close" class="button_small" type="submit" title="Close Teaching Module window" value="Close"/>
 		</div>

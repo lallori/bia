@@ -4157,6 +4157,364 @@ ul#network a {
 	display: inline-block;
 }
 
+/* Manage Lessons Image */
+
+#imagesForLessonsTitleSection {
+	margin-top: 10px;
+}
+
+#imagesForLessonsTitleSection h3 {
+	display: inline-block;
+}
+
+#imagesForLessonsTitleSection #uploadBtn {
+	display: inline-block;
+	float: right;
+}
+
+#imagesPaginate {
+	margin-top: 10px;
+	text-align: right;
+	width: 100%;
+}
+
+#imagesTable {
+	border: 1px solid #dcc0ba;
+	border-collapse: collapse;
+	margin-top: 15px;
+	width: 100%;
+}
+
+#imagesTable td, #imagesTable th {
+	border-left: 1px solid #dcc0ba;
+	border-right: 1px solid #dcc0ba;
+	text-align: center;
+}
+
+#imagesTable th[columnid='0'] {
+	width: 18%;
+	cursor: pointer;
+}
+
+#imagesTable th[columnid='1'] {
+	width: 40%;
+	cursor: pointer;
+}
+
+#imagesTable th[columnid='2'] {
+	width: 25%;
+	cursor: pointer;
+}
+
+#imagesTable th[columnid='3'] {
+	width: 17%;
+}
+
+#imagesTable tr {
+	height: 25px;
+}
+
+#imagesTable tr[class='titleRow'] {
+	height: 35px;
+	border: 1px solid #dcc0ba;
+}
+
+#imagesOrderingForm #clearFilterBtn {
+	margin-left: 5px;
+	display: inline-block;
+}
+
+#imagesOrderingForm #filterByTitleBtn {
+	margin-left: 5px;
+	display: inline-block;
+}
+
+#imagesOrderingForm #titleFilter {
+	margin-left: 5px;
+	width: 140px;
+	display: inline-block;
+}
+
+#imagesOrderingForm #titleFilterLabel {
+	display: inline-block;
+}
+
+/* Upload Lessons Images */
+
+#fileListSection {
+	padding-top: 10px;
+}
+
+#fileListSection #fileListTable {
+	border: 1px solid #dcc0ba;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#fileListSection #fileListTable .deleteBtn {
+	width: 20px;
+	height: 20px;
+	background: url(${contextPath}/images/1024/button_delete.png) no-repeat;
+	cursor: pointer;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+#fileListSection #fileListTable .moveDownBtn {
+	width: 30px;
+	height: 30px;
+	background: url(${contextPath}/images/1024/button_arrowdown.png) no-repeat;
+	margin-left: 5px;
+	cursor: pointer;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+#fileListSection #fileListTable .moveDownBtn.disabled {
+	width: 30px;
+	height: 30px;
+	background: url(${contextPath}/images/1024/button_arrowdowndisabled.png) no-repeat;
+	margin-left: 5px;
+	cursor: pointer;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+#fileListSection #fileListTable .moveUpBtn {
+	width: 30px;
+	height: 30px;
+	background: url(${contextPath}/images/1024/button_arrowup.png) no-repeat;
+	margin-left: 5px;
+	cursor: pointer;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+#fileListSection #fileListTable .moveUpBtn.disabled {
+	width: 30px;
+	height: 30px;
+	background: url(${contextPath}/images/1024/button_arrowupdisabled.png) no-repeat;
+	margin-left: 5px;
+	cursor: pointer;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+#fileListSection #fileListTable tr[class='listRow'] {
+	height: 25px;
+}
+
+#fileListSection #fileListTable tr[class='listRow'] .col0 {
+	border-left: 1px solid #dcc0ba;
+	border-right: 1px solid #dcc0ba;
+	text-align: center;
+}
+
+#fileListSection #fileListTable tr[class='listRow'] .col1 {
+	border-left: 1px solid #dcc0ba;
+	border-right: 1px solid #dcc0ba;
+	padding-left: 5px;
+}
+
+#fileListSection #fileListTable tr[class='listRow'] .col2 {
+	border-left: 1px solid #dcc0ba;
+	border-right: 1px solid #dcc0ba;
+	text-align: center;
+}
+
+#fileListSection #fileListTable .header {
+	height: 45px;
+	border: 1px solid #dcc0ba;
+}
+
+#fileListSection #fileListTable .header th[class="col0"] {
+	width: 15%;
+	text-align: center;
+	border-left: 1px solid #dcc0ba;
+	border-right: 1px solid #dcc0ba;
+}
+
+#fileListSection #fileListTable .header th[class="col1"] {
+	width: 60%;
+	text-align: center;
+	border-left: 1px solid #dcc0ba;
+	border-right: 1px solid #dcc0ba;
+}
+
+#fileListSection #fileListTable .header th[class="col2"] {
+	width: 25%;
+	text-align: center;
+	border-left: 1px solid #dcc0ba;
+	border-right: 1px solid #dcc0ba;
+}
+
+#selectFileSection {
+	width: 100%;
+	padding-top: 20px;
+}
+
+#selectFileSection .title {
+	width: 100%;
+}
+
+#selectFileSection .commands {
+	padding-top: 5px;
+}
+
+#selectFileSection .commands .browseBtn {
+	display: inline-block;
+}
+
+#selectFileSection .doUploadBtn {
+	float: right;
+}
+
+#selectFileSection #selectedFiles {
+	display: inline-block;
+	margin-left: 20px;
+}
+
+#selectFileSection .title {
+	font-weight: bold;
+}
+
+#uploadNewImagesTitleSection {
+	margin-top: 10px;
+}
+
+#uploadNewImagesTitleSection h3 {
+	display: inline-block;
+}
+
+#uploadNewImagesTitleSection .returnBtn {
+	display: inline-block;
+	float: right;
+}
+
+/* Upload and convert image modal */
+
+#uploadModal .error {
+	padding-top: 8px;
+	color: #ff0000;
+}
+
+#uploadModal .imageDescription.emptyInput {
+	background-color: #ffffaa;
+}
+
+#uploadModal .phase1, #uploadModal .phase2, #uploadModal .phase3 {
+	color: #666ea4;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+#uploadModal .phase2_little, #uploadModal .phase3_little {
+	color: black;
+	font-size: 12px;
+}
+
+#uploadModal .tbody {
+	padding-left: 20px;
+	max-height: 200px;
+	overflow-y: auto;
+}
+
+#uploadModal .tbody .bodyTable {
+	width: 450px;
+	margin-left: -20px;
+	border-collapse: collapse;
+}
+
+#uploadModal .tbody .bodyTable tr[class='listRow'] {
+	height: 25px;
+}
+
+#uploadModal .tbody .bodyTable .col0 {
+	width: 10%;
+	text-align: center;
+	border: 1px solid #dcc0ba;
+}
+
+#uploadModal .tbody .bodyTable .col1 {
+	width: 40%;
+	padding-left: 5px;
+	border: 1px solid #dcc0ba;
+}
+
+#uploadModal .tbody .bodyTable .col2 {
+	width: 50%;
+	text-align: center;
+	border: 1px solid #dcc0ba;
+}
+
+#uploadModal .tbody .bodyTable .imageDescription {
+	width: 90%;
+}
+
+#uploadModal .tbody .bodyTable .currentStateImg.completed_conversion {
+	width: 20px;
+	height: 20px;
+	background: url(${contextPath}/images/1024/img_tick.png) no-repeat;
+	display: inline-block;
+}
+
+#uploadModal .tbody .bodyTable .currentStateImg.completed_upload {
+	width: 20px;
+	height: 20px;
+	background: url(${contextPath}/images/1024/img_stored.gif) no-repeat;
+	display: inline-block;
+}
+
+#uploadModal .tbody .bodyTable .currentStateImg.error_conversion, #uploadModal .tbody .bodyTable .currentStateImg.error_upload {
+	width: 20px;
+	height: 20px;
+	background: url(${contextPath}/images/1024/img_stop.png) no-repeat;
+	display: inline-block;
+}
+
+#uploadModal .tbody .bodyTable .currentStateImg.progress_conversion, #uploadModal .tbody .bodyTable .currentStateImg.progress_upload {
+	width: 20px;
+	height: 20px;
+	background: url(${contextPath}/images/1024/img_progress.gif) no-repeat;
+	display: inline-block;
+}
+
+#uploadModal .tbody .bodyTable .currentStateImg.scheduled_conversion, #uploadModal .tbody .bodyTable .currentStateImg.scheduled_upload {
+	width: 20px;
+	height: 20px;
+	background: url(${contextPath}/images/1024/img_queued.png) no-repeat;
+	display: inline-block;
+}
+
+#uploadModal .theader .headerTable {
+	width: 450px;
+	border-collapse: collapse;
+}
+
+#uploadModal .theader .headerTable tr[class="header"] {
+	height: 45px;
+	border-top: 1px solid #dcc0ba;
+	border-left: 1px solid #dcc0ba;
+	border-right: 1px solid #dcc0ba;
+}
+
+#uploadModal .theader .headerTable th[class="col0"] {
+	width: 10%;
+	text-align: center;
+	border-right: 1px solid #dcc0ba;
+}
+
+#uploadModal .theader .headerTable th[class="col1"] {
+	width: 40%;
+	text-align: center;
+	border-right: 1px solid #dcc0ba;
+}
+
+#uploadModal .theader .headerTable th[class="col2"] {
+	width: 50%;
+	text-align: center;
+}
+
 /* ---------------- User Management ------------- */
 
 /* Modal */

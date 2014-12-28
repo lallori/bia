@@ -4944,6 +4944,10 @@ ul#network a {
 	padding-top: 20px;
 }
 
+#selectFileSection .title {
+	width: 100%;
+}
+
 #selectFileSection .commands {
 	padding-top: 5px;
 }
@@ -4963,6 +4967,10 @@ ul#network a {
 
 #selectFileSection .title {
 	font-weight: bold;
+}
+
+#uploadNewImagesTitleSection {
+	margin-top: 10px;
 }
 
 #uploadNewImagesTitleSection h3 {

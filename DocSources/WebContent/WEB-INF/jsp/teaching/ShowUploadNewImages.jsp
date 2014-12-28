@@ -75,14 +75,20 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
-			
+
 			var inputs = [];
 			var tableLength = 0;
 			var uploadRunning = false;
 			var decidingAbort = false;
 			var aborted = false;
-			
+
+			$j(".doUploadBtn").die();
 			$j(".doUploadBtn").click(function() {
+
+				// XXX: check if modals were defined before
+				if ($j(".uploadModal").length === 0) {
+					initializeUploadModals();
+				}
 				
 				// remove the close button in the upload-modal title toolbar
 				$j(".uploadModal .ui-dialog-titlebar-close").hide();
@@ -90,25 +96,27 @@
 				$j("#retryNotUploadedBtn").hide();
 				$j("#retryNotConvertedBtn").hide();
 				$j("#leaveNotConvertedBtn").hide();
-				debugger;
+
 				$j("#uploadModal .tbody table").empty();
 				
 				for (var i = 0; i < inputs.length; i++) {
 					$j("#uploadModal .tbody table").append(getModalTableRow(i, inputs[i].name, inputs[i].description));
 				}
-				
 				$j("#uploadModal").dialog("open");
+				
 				var dialogHeight = tableLength < 7 ? (230 + tableLength * 30) : 420;
 				$j("#uploadModal").dialog("option", "height", dialogHeight);
 				
 				return false;
 			});
 			
+			$j(".browseBtn").die();
 			$j(".browseBtn").click(function() {
 				$j("#uploadFiles").click();
 				return false;
 			});
 			
+			$j("#uploadFiles").die();
 			$j("#uploadFiles").change(function() {
 				
 				var files = $j("#uploadFiles").prop('files');
@@ -149,8 +157,14 @@
 			$j(".returnBtn").die();
 			$j(".returnBtn").click(function() {
 				if (tableLength > 0) {
+					if ($j(".returnModal").length === 0) {
+						initializeReturnModal();
+					}
 					$j("#returnModal").dialog('open');
 					return false;
+				}
+				if ($j(".returnModal").length > 0) {
+					$j("#returnModal").dialog('destroy');
 				}
 				reloadUploadedImagesList();
 				return false;
@@ -158,188 +172,204 @@
 			
 			/* Modal definitions */
 			
-			$j("#abortModal").dialog({
-				autoOpen : false,
-				modal: true,
-				resizable: false,
-				width: 300,
-				height: 130, 
-				buttons: [
-					{
-						id: 'abortOk',
-						text: 'OK',
-						click: function() {
-							$j(this).dialog("close");
-							decidingAbort = false;
-							aborted = true;
-							resetUploadModal();
-						}
-					},
-					{
-						id: 'abortNo',
-						text: 'No',
-						click: function() {
-							$j(this).dialog("close");
-							decidingAbort = false;
-							$j("#uploadModal").dialog("open");
-						}
-					}
-				]
-			});
-			
-			$j("#completeModal").dialog({
-				autoOpen : false,
-				modal: true,
-				resizable: false,
-				width: 300,
-				height: 130, 
-				buttons: [
-					{
-						id: 'completeOk',
-						text: 'OK',
-						click: function() {
-							resetUploadModal();
-							$j(this).dialog("close");
-							reloadUploadedImagesList();
-							return false;
-						}
-					}
-				]
-			});
-		
-			$j("#returnModal").dialog({
-				autoOpen : false,
-				modal: true,
-				resizable: false,
-				width: 300,
-				height: 130, 
-				buttons: [
-					{
-						id: 'returnOk',
-						text: 'OK',
-						click: function() {
-							$j(this).dialog("close");
-							reloadUploadedImagesList();
-						}
-					},
-					{
-						id: 'returnNo',
-						text: 'No',
-						click: function() {
-							$j(this).dialog("close");
-						}
-					}
-				]
-			});
-			
-			$j("#uploadModal").dialog({
-				autoOpen : false,
-				modal: true,
-				resizable: false,
-				width: 500,
-				height: 150, 
-				dialogClass: 'uploadModal',
-				buttons: [
-					{
-						id: 'uploadBtn',
-						text: 'Upload',
-						click: function() {
-							debugger;
-							var errors = 0;
-							$j("#uploadModal input.imageDescription").each(function() {
-								if (typeof $j(this).val() === 'undefined' || $j(this).val().match(/^ * *$/)) {
-									errors++;
-									$j(this).addClass('emptyInput');
-								} else {
-									inputs[parseInt($j(this).attr('row'))].description = $j(this).val().trim();
-									$j(this).removeClass('emptyInput');
-								}
-							});
-							
-							if (errors > 0) {
-								showError('descriptionMissing');
+			function initializeReturnModal() {
+				$j("#returnModal").dialog({
+					autoOpen : false,
+					modal: true,
+					resizable: false,
+					width: 300,
+					height: 130, 
+					dialogClass: 'returnModal',
+					buttons: [
+						{
+							id: 'returnOk',
+							text: 'OK',
+							click: function() {
+								$j(this).dialog("close");
+								$j(this).dialog("destroy");
+								reloadUploadedImagesList();
 								return false;
-							} else {
-								// now we can do the uploads
-								showError();
-								$j(".uploadModal .ui-dialog-titlebar .ui-dialog-title").text("[2 of 3] Uploading...");
-								$j("#uploadModal .phase1").hide();
-								$j("#uploadModal .phase2").show();
-								$j("#uploadBtn").hide();
-								$j("#uploadModal .theader .headerTable th[class='col2']").html("Progress");
+							}
+						},
+						{
+							id: 'returnNo',
+							text: 'No',
+							click: function() {
+								$j(this).dialog("close");
+								return false;
+							}
+						}
+					]
+				});
+			}
+			
+			function initializeUploadModals() {
+			
+				$j("#abortModal").dialog({
+					autoOpen : false,
+					modal: true,
+					resizable: false,
+					width: 300,
+					height: 130,
+					dialogClass: 'abortModal',
+					buttons: [
+						{
+							id: 'abortOk',
+							text: 'OK',
+							click: function() {
+								$j(this).dialog("close");
+								decidingAbort = false;
+								aborted = true;
+								prepareStep(1);
+								return false;
+							}
+						},
+						{
+							id: 'abortNo',
+							text: 'No',
+							click: function() {
+								$j(this).dialog("close");
+								decidingAbort = false;
+								$j("#uploadModal").dialog("open");
+								return false;
+							}
+						}
+					]
+				});
+				
+				$j("#completeModal").dialog({
+					autoOpen : false,
+					modal: true,
+					resizable: false,
+					width: 300,
+					height: 130,
+					dialogClass: 'completeModal',
+					buttons: [
+						{
+							id: 'completeOk',
+							text: 'OK',
+							click: function() {
+								$j(this).dialog("close");
+								// remove all the modal
+								$j("#uploadModal").dialog('destroy');
+								$j("#abortModal").dialog('destroy');
+								$j("#returnModal").dialog('destroy');
+								$j("#completeModal").dialog('destroy');
+								reloadUploadedImagesList();
+								return false;
+							}
+						}
+					]
+				});
+			
+				$j("#uploadModal").dialog({
+					autoOpen : false,
+					modal: true,
+					resizable: false,
+					width: 500,
+					height: 150, 
+					dialogClass: 'uploadModal',
+					buttons: [
+						{
+							id: 'uploadBtn',
+							text: 'Upload',
+							click: function() {
 								
+								var errors = 0;
 								$j("#uploadModal input.imageDescription").each(function() {
-									var row = parseInt($j(this).attr('row'));
-									if (!inputs[row].uploaded) {
-										$j(this).replaceWith(nextStatusImage(row, 'start'));
+									if (typeof $j(this).val() === 'undefined' || $j(this).val().match(/^ * *$/)) {
+										errors++;
+										$j(this).addClass('emptyInput');
 									} else {
-										$j(this).replaceWith(nextStatusImage(row, 'progress_upload'));
+										inputs[parseInt($j(this).attr('row'))].description = $j(this).val().trim();
+										$j(this).removeClass('emptyInput');
 									}
 								});
 								
+								if (errors > 0) {
+									showError('descriptionMissing');
+									return false;
+								} else {
+									// now we can do the uploads
+									removeError();
+									prepareStep(2);
+									
+									$j("#uploadModal input.imageDescription").each(function() {
+										var row = parseInt($j(this).attr('row'));
+										if (!inputs[row].uploaded) {
+											$j(this).replaceWith(nextStatusImage(row, 'start'));
+										} else {
+											$j(this).replaceWith(nextStatusImage(row, 'progress_upload'));
+										}
+									});
+									
+									uploadNext(0);
+								}
+								return false;
+							} 
+						},
+						{
+							id: 'retryNotUploadedBtn',
+							text: 'Retry Not Uploaded',
+							click: function() {
+								removeError();
+								$j("#retryNotUploadedBtn").hide();
+								for (var i = 0; i < inputs.length; i++) {
+									if (!inputs[i].uploaded) {
+										nextStatusImage(i, 'error_upload');
+									}
+								}
 								uploadNext(0);
-							}
-							return false;
-						} 
-					},
-					{
-						id: 'retryNotUploadedBtn',
-						text: 'Retry Not Uploaded',
-						click: function() {
-							showError();
-							$j("#retryNotUploadedBtn").hide();
-							for (var i = 0; i < inputs.length; i++) {
-								if (!inputs[i].uploaded) {
-									nextStatusImage(i, 'error_upload');
-								}
-							}
-							uploadNext(0);
-							return false;
-						}
-					},
-					{
-						id: 'retryNotConvertedBtn',
-						text: 'Retry Not Converted',
-						click: function() {
-							showError();
-							$j("#retryNotConvertedBtn").hide();
-							$j("#leaveNotConvertedBtn").hide();
-							for (var i = 0; i < inputs.length; i++) {
-								if (!inputs[i].converted) {
-									nextStatusImage(i, 'error_converted');
-								}
-							}
-							convert(0);
-							return false;
-						}
-					},
-					{
-						id: 'leaveNotConvertedBtn',
-						text: 'Leave not Converted',
-						click: function() {
-							showError();
-							$j(this).dialog('close');
-							resetUploadModal();
-							reloadUploadedImagesList();
-							return false;
-						}
-					},
-					{
-						id: 'abortModalBtn',
-						text: 'Abort',
-						click: function() {
-							$j(this).dialog('close');
-							if (uploadRunning) {
-								decidingAbort = true;
-								$j("#abortModal").dialog('open');
 								return false;
 							}
-							resetUploadModal();
-							return false;
+						},
+						{
+							id: 'retryNotConvertedBtn',
+							text: 'Retry Not Converted',
+							click: function() {
+								removeError();
+								$j("#retryNotConvertedBtn").hide();
+								$j("#leaveNotConvertedBtn").hide();
+								for (var i = 0; i < inputs.length; i++) {
+									if (!inputs[i].converted) {
+										nextStatusImage(i, 'error_converted');
+									}
+								}
+								convert(0);
+								return false;
+							}
+						},
+						{
+							id: 'leaveNotConvertedBtn',
+							text: 'Leave not Converted',
+							click: function() {
+								$j(this).dialog("close");
+								// remove all the modal
+								$j("#uploadModal").dialog('destroy');
+								$j("#abortModal").dialog('destroy');
+								$j("#returnModal").dialog('destroy');
+								$j("#completeModal").dialog('destroy');
+								reloadUploadedImagesList();
+								return false;
+							}
+						},
+						{
+							id: 'abortBtn',
+							text: 'Abort',
+							click: function() {
+								$j(this).dialog('close');
+								if (uploadRunning) {
+									decidingAbort = true;
+									$j("#abortModal").dialog('open');
+									return false;
+								}
+								prepareStep(1);
+								return false;
+							}
 						}
-					}
-				]
-			});
+					]
+				});
+			}
 			
 			/* functions */
 			
@@ -400,7 +430,7 @@
 			 * @param index the index of the image in the file list table
 			 */
 			function convert(index) {
-				debugger;
+				
 				if (inputs.length <= index) {
 					// conversion process has iterated over all the images
 					var convertedNum = 0;
@@ -425,8 +455,7 @@
 					return;
 				}
 				
-				var imprevisto = false;
-				if (!inputs[index].converted && !imprevisto) {
+				if (!inputs[index].converted) {
 					nextStatusImage(index, 'scheduled_conversion');
 					
 					var data = new FormData();
@@ -442,7 +471,6 @@
 						processData: false,
 						type: "POST",
 						success: function(json) {
-							debugger;
 							if (json.response == 'OK') {
 								inputs[index].converted = true;
 								nextStatusImage(index, 'progress_conversion');
@@ -457,10 +485,6 @@
 					    }
 					});
 				} else {
-					if (!inputs[index].converted && imprevisto) {
-						nextStatusImage(index, 'scheduled_conversion');
-						nextStatusImage(index, 'progress_conversion', 'errore non previsto...');
-					}
 					convert(index + 1);
 				}
 				
@@ -566,6 +590,42 @@
 				$j($image).attr('title', newTitle);
 				return $image;
 			}
+
+			/**
+			 * Initializes modal to the provided step.
+			 *
+			 * @param stepNo the step to initialize (one of 1, 2 or 3)
+			 */
+			function prepareStep(stepNo) {
+				switch (stepNo) {
+					case 1:
+						$j(".uploadModal .ui-dialog-titlebar .ui-dialog-title").text("[1 of 3] Prepare Upload Process");
+						$j("#uploadModal .phase1").show();
+						$j("#uploadModal .phase2").hide();
+						$j("#uploadModal .phase3").hide();
+						$j("#uploadBtn").show();
+						$j("#retryNotUploadedBtn").hide();
+						$j("#retryNotConvertedBtn").hide();
+						$j("#leaveNotConvertedBtn").hide();
+						$j("#uploadModal .theader .headerTable th[class='col2']").html("Description");
+						removeError();
+						$j(".uploadModal .ui-dialog-titlebar-close").show();
+						break;
+					case 2:
+						$j(".uploadModal .ui-dialog-titlebar .ui-dialog-title").text("[2 of 3] Uploading...");
+						$j("#uploadModal .phase1").hide();
+						$j("#uploadModal .phase2").show();
+						$j("#uploadBtn").hide();
+						$j("#uploadModal .theader .headerTable th[class='col2']").html("Progress");
+						break;
+					case 3:
+						$j(".uploadModal .ui-dialog-titlebar .ui-dialog-title").text("[3 of 3] Converting...");
+						$j("#uploadModal .phase2").hide();
+						$j("#uploadModal .phase3").show();
+						$j("#abortBtn").hide();
+						break;
+				}
+			}
 			
 			/**
 			 * Refreshes the up and down buttons status in the file list table.
@@ -599,26 +659,16 @@
 					}
 				});
 			}
-			
+
 			/**
-			 * Restores the initial status of the 'upload modal'.
+			 * Removes errors showed from the modal.
 			 */
-			function resetUploadModal() {
-				$j(".uploadModal .ui-dialog-titlebar .ui-dialog-title").text("[1 of 3] Prepare Upload Process");
-				$j("#uploadModal .phase1").show();
-				$j("#uploadModal .phase2").hide();
-				$j("#uploadModal .phase3").hide();
-				$j("#uploadBtn").show();
-				$j("#retryNotUploadedBtn").hide();
-				$j("#retryNotConvertedBtn").hide();
-				$j("#leaveNotConvertedBtn").hide();
-				$j("#uploadModal .theader .headerTable th[class='col2']").html("Description");
-				$j("#uploadModal .error").hide();
-				$j(".uploadModal .ui-dialog-titlebar-close").show();
+			function removeError() {
+				showError();
 			}
 			
 			/**
-			 * Shows/Hides the error section.
+			 * Shows the error section in the 'upload modal'.
 			 *
 			 * @param errorId the error identifier to show, if none it hides the error section
 			 */
@@ -660,9 +710,7 @@
 						}
 						if (!someErrors) {
 							// conversion process can be fired
-							$j(".uploadModal .ui-dialog-titlebar .ui-dialog-title").text("[3 of 3] Converting...");
-							$j("#uploadModal .phase2").hide();
-							$j("#uploadModal .phase3").show();
+							prepareStep(3);
 							$j('.currentStateImg').each(function() {
 								nextStatusImage($j(this).attr('row'), 'completed_upload');
 							});
@@ -674,10 +722,10 @@
 					}
 					return;
 				}
+				
 				uploadRunning = true;
-				var imprevisto = Math.round(Math.random()) === 0;
-				console.log('Errore imprevisto di upload: ' + imprevisto);
-				if (!inputs[index].uploaded && !imprevisto) {
+				
+				if (!inputs[index].uploaded) {
 					// the image has not been uploaded yet
 					nextStatusImage(index, 'scheduled_upload');
 	
@@ -711,10 +759,6 @@
 					    }
 					});
 				} else {
-					if (!inputs[index].uploaded && imprevisto) {
-						nextStatusImage(index, 'scheduled_upload');
-						nextStatusImage(index, 'progress_upload', 'errore imprevisto');
-					}
 					uploadNext(index + 1);
 				}
 			};

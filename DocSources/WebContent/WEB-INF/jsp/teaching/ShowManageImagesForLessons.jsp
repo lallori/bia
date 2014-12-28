@@ -69,6 +69,9 @@
 	
 	<script type="text/javascript">
 		$j(document).ready(function() {
+
+			//XXX: remove all modals definied in ShowUploadNewImages.jsp due to a problem of jquery.dialogextend plugin
+			$j(".ui-dialog").remove();
 			
 			if ($j("#body_left .waitingModal").length === 0) {
 				$j("#body_left").append("<div class='waitingModal' style='display: none;'></div>");
