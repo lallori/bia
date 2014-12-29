@@ -58,16 +58,17 @@ public class ImageConversionInvoker {
 	public int fire() {
 		try {
 			Runtime rt = Runtime.getRuntime();
-			String[] command = null;
+			Process process = null;
 			
 			if (SystemUtils.IS_OS_LINUX) {
 				logger.info("IMAGE CONVERSION TASK: Linux Operating System detected...");
-				command = new String[2];
-				command[0] = "/bin/bash";
+				String[] env = {"PATH=/bin:/usr/bin/"};
 				String scriptCommand = ApplicationPropertyManager.getApplicationProperty("path.tmpdir") + 
 						(ApplicationPropertyManager.getApplicationProperty("path.tmpdir").endsWith("/") ? "upload_images.sh" : "/upload_images.sh");
-				command[1] = "'" + scriptCommand + "' '" + fileName + "' '" + fileTitle + "' " + imageOrder + " " + storagePath;
-				logger.info("IMAGE CONVERSION TASK: launching command [" + command[0] + " " + command[1] + "]");
+				String cmd = scriptCommand + " " + fileName + " '" + fileTitle + "' " + imageOrder + " " + storagePath;
+				logger.info("IMAGE CONVERSION TASK: launching command [" + cmd + "]");
+				
+				process = rt.exec(cmd, env);
 			} else if (SystemUtils.IS_OS_WINDOWS) {
 				// XXX for development environment: we suppose the 'insert_after_upload.bat' file is
 				// in the 'path.tmpdir' location
@@ -75,16 +76,17 @@ public class ImageConversionInvoker {
 						+ " \"" + fileName + "\" \"" + fileTitle + "\" \"" + imageOrder + "\" \"" + storagePath + "\"\"" ;
 						
 				logger.info("IMAGE CONVERSION TASK: Windows Operating System detected...");
-				command = new String[3];
+				String[] command = new String[3];
 				command[0] = "cmd.exe";
 				command[1] = "/C";
 				command[2] = realCommand;
+				
+				process = rt.exec(command);
 			} else {
 				logger.error("IMAGE CONVERSION TASK: The detected Operating System is not supported...the task is aborted!");
 				return NOT_SUPPORTED_OS;
 			}
 			
-			Process process = rt.exec(command);
 			
 			ImageConversionProcessStreamLogger errorLoggerConsumer = new ImageConversionProcessStreamLogger(process.getErrorStream(), logger, ImageConversionProcessStreamLogger.LogLevel.ERROR);
 			ImageConversionProcessStreamLogger infoLoggerConsumer = new ImageConversionProcessStreamLogger(process.getInputStream(), logger, ImageConversionProcessStreamLogger.LogLevel.INFO);
