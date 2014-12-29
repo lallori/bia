@@ -65,7 +65,7 @@ public class ImageConversionInvoker {
 				String[] env = {"PATH=/bin:/usr/bin/"};
 				String scriptCommand = ApplicationPropertyManager.getApplicationProperty("path.tmpdir") + 
 						(ApplicationPropertyManager.getApplicationProperty("path.tmpdir").endsWith("/") ? "upload_images.sh" : "/upload_images.sh");
-				String cmd = scriptCommand + " " + fileName + " '" + fileTitle + "' " + imageOrder + " " + storagePath;
+				String cmd = scriptCommand + " '" + fileName + "' '" + fileTitle + "' " + imageOrder + " " + storagePath;
 				logger.info("IMAGE CONVERSION TASK: launching command [" + cmd + "]");
 				
 				process = rt.exec(cmd, env);
