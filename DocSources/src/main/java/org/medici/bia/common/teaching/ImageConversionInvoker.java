@@ -66,7 +66,7 @@ public class ImageConversionInvoker {
 				command[0] = "/bin/bash";
 				String scriptCommand = ApplicationPropertyManager.getApplicationProperty("path.tmpdir") + 
 						(ApplicationPropertyManager.getApplicationProperty("path.tmpdir").endsWith("/") ? "upload_images.sh" : "/upload_images.sh");
-				command[1] = "\"'" + scriptCommand + "' '" + fileName + "' '" + fileTitle + "' " + imageOrder + " " + storagePath + "\"";
+				command[1] = "'" + scriptCommand + "' '" + fileName + "' '" + fileTitle + "' " + imageOrder + " " + storagePath;
 				logger.info("IMAGE CONVERSION TASK: launching command [" + command[0] + " " + command[1] + "]");
 			} else if (SystemUtils.IS_OS_WINDOWS) {
 				// XXX for development environment: we suppose the 'insert_after_upload.bat' file is
