@@ -64,7 +64,8 @@ public class ImageConversionInvoker {
 				logger.info("IMAGE CONVERSION TASK: Linux Operating System detected...");
 				command = new String[2];
 				command[0] = "/bin/bash";
-				command[1] = "create_tiled.sh '" + fileName + "' '" + fileTitle + "' " + imageOrder + " " + storagePath;
+				command[1] = "\"'" + ApplicationPropertyManager.getApplicationProperty("path.tmpdir") + "/create_tiled.sh '" + fileName + "' '" + fileTitle + "' " + imageOrder + " " + storagePath + "\"";
+				logger.info("IMAGE CONVERSION TASK: launching command [" + command[0] + " " + command[1] + "]");
 			} else if (SystemUtils.IS_OS_WINDOWS) {
 				// XXX for development environment: we suppose the 'insert_after_upload.bat' file is
 				// in the 'path.tmpdir' location
