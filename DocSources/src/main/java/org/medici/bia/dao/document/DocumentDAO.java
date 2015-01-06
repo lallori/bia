@@ -38,6 +38,7 @@ import org.medici.bia.common.pagination.PaginationFilter;
 import org.medici.bia.common.search.Search;
 import org.medici.bia.dao.Dao;
 import org.medici.bia.domain.Document;
+import org.medici.bia.domain.Image;
 
 /**
  * Document Dao.
@@ -261,6 +262,15 @@ public interface DocumentDAO extends Dao<Integer, Document> {
 	 * @throws PersistenceException
 	 */
 	Map<Integer, Integer> getAssociatedImage(List<Integer> entryIds) throws PersistenceException;
+	
+	/**
+	 * This method returns the documents associated to the provided image (as transcribed folio).
+	 * 
+	 * @param image the image
+	 * @return the documents associated to the image
+	 * @throws PersistenceException
+	 */
+	List<Document> getDocumentsByImage(Image image) throws PersistenceException;
 	
 	/**
 	 * This method returns the document relative to the course transcription container.

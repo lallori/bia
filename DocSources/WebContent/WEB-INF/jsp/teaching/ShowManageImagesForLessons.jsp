@@ -46,11 +46,20 @@
 						<th columnid="3" class="col3">Actions</th>
 					</tr>
 					<c:forEach items="${images.list}" var="image">
+						<c:url var="ShowImagePreviewURL" value="/teaching/ShowImagePreview.do">
+							<c:param name="imageId" value="${image.imageId}" />
+						</c:url>
+						<c:url var="ShowCreateLessonFromImageURL" value="/teaching/ShowCreateLessonFromImageModalWindow.do">
+							<c:param name="imageId" value="${image.imageId}" />
+						</c:url>
 						<tr>
 							<td>${image.imageId}</td>
 							<td>${image.imageTitle}</td>
 							<td><fmt:formatDate pattern="MM/dd/yyyy HH:mm" value="${image.dateCreated}" /></td>
-							<td><!-- commands --></td>
+							<td>
+								<a href="${ShowImagePreviewURL}" class="showPreview" imageId="${image.imageId}" title="Show Image Preview" />
+								<a href="${ShowCreateLessonFromImageURL}" class="createLesson" imageId="${image.imageId}" title="Create new lesson with this image" />
+							</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -104,6 +113,12 @@
 				$j("#filterByTitleBtn").click();
 				return false;
 			});
+
+			$j(".createLesson").die();
+			$j(".createLesson").click(function() {
+				Modalbox.show($j(this).attr('href'), {title: "CREATE LESSON WITH IMAGE #" + $j(this).attr('imageId'), width: 470, height: 180});
+				return false;
+			});
 			
 			$j("#uploadBtn").die();
 			$j("#uploadBtn").click(function() {
@@ -112,6 +127,44 @@
 						alert('Server error...if problem persists please contact the admin!');
 					}
 				});
+				return false;
+			});
+
+			$j("#imagesTable .showPreview").die();
+			$j("#imagesTable .showPreview").click(function() {
+				var imageId = $j(this).attr('imageId');
+				var tabId = 'titleTab_imagePreview_' + imageId;
+				var tabName = "<span id='" + tabId + "'>Image Preview #" + imageId + "</span>";
+
+				// Check if the tab already exists
+				var numTab = 0;
+				var tabExist = false;
+				$j("#tabs ul li a").each(function() {
+					var sameId = $j(this).find("span").find("span");
+					// MD: Declare variable toTest for fix problem with IE
+					var toTest = "";
+					toTest += this.text;
+					if (!tabExist) {
+						if (toTest != "") {
+							numTab++;
+						}
+					}
+					if (toTest === tabName || $j(sameId).attr("id") === tabId) {
+						tabExist = true;
+					}
+				});
+
+				if (!tabExist) {
+					$j("#tabs").tabs("add", $j(this).attr("href"), tabName + "</span></a><span class=\"ui-icon ui-icon-close\" title=\"Close Tab\">Remove Tab");
+					$j("#tabs").tabs("select", $j("#tabs").tabs("length")-1);
+					return false;
+				} else {
+					$j("#tabs").tabs("select", numTab);
+					$j('#tabs ul li').eq(numTab).data('loaded', false).find('a').attr('href', $j(this).attr("href"));
+					$j("#tabs").tabs("load", numTab);
+					return false;
+				}
+				
 				return false;
 			});
 			

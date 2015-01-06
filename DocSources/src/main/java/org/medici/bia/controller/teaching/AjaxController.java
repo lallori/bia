@@ -159,6 +159,37 @@ public class AjaxController {
 		return model;
 	}
 	
+	@RequestMapping(value = "/teaching/CreateCourseTranscriptionFromImage", method = RequestMethod.POST)
+	public @ResponseBody Map<String, Object> createCourseTranscriptionFromImage(
+			@RequestParam(value="imageId", required=true) Integer imageId,
+			@RequestParam(value="courseTitle", required=true) String topicTitle,
+			@RequestParam(value="courseId", required=true) Integer courseId,
+			@RequestParam(value="transcriptionMode", required=false) String mode,
+			HttpServletRequest httpServletRequest) {
+		Map<String, Object> model = new HashMap<String, Object>(0);
+		
+		try {
+			CourseTopicMode topicMode = null;
+			try {
+				topicMode = StringUtils.isNullableString(mode) ? CourseTopicMode.I : CourseTopicMode.valueOf(mode.trim());
+			} catch (Exception e) {
+				topicMode = CourseTopicMode.I; 
+			}
+			ForumTopic courseTopic = getTeachingService().addCourseTopicWithImage(
+					courseId, 
+					imageId, 
+					topicTitle.trim(), 
+					topicMode, 
+					httpServletRequest.getRemoteAddr());
+			
+			model.put("entryId", courseTopic.getDocument().getEntryId());
+			model.put("courseTopicId", courseTopic.getTopicId());
+		} catch (ApplicationThrowable th) {
+			model.put("error", th.toString());
+		}
+		return model;
+	}
+	
 	@RequestMapping(value = "/teaching/deactivateCourse", method = RequestMethod.POST)
 	public Map<String, Object> deactivateCourse(
 			@RequestParam(value="courseId", required=true) Integer courseId, 

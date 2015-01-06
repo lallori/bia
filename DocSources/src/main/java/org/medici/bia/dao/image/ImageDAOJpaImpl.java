@@ -404,7 +404,7 @@ public class ImageDAOJpaImpl extends JpaDao<Integer, Image> implements ImageDAO 
         	if (!org.medici.bia.common.util.StringUtils.isNullableString(image.getMissedNumbering())) {
         		query.setParameter("missedNumbering", image.getMissedNumbering());
         	}
-        	if (image.getImageRectoVerso() != null && !Image.ImageRectoVerso.N.equals(image.getImageRectoVerso())) {
+        	if (image.getImageRectoVerso() != null/* && !Image.ImageRectoVerso.N.equals(image.getImageRectoVerso())*/) {
         		query.setParameter("imageRectoVerso", image.getImageRectoVerso());
         	}
 			List<Image> result = (List<Image>) query.getResultList();

@@ -250,11 +250,11 @@
 							text: 'OK',
 							click: function() {
 								$j(this).dialog("close");
-								// remove all the modal
+								// remove all opened modals
 								$j("#uploadModal").dialog('destroy');
-								$j("#abortModal").dialog('destroy');
-								$j("#returnModal").dialog('destroy');
 								$j("#completeModal").dialog('destroy');
+								// remove also the other modals
+								$j(".ui-dialog").remove();
 								reloadUploadedImagesList();
 								return false;
 							}

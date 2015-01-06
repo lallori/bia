@@ -62,6 +62,7 @@ import org.medici.bia.dao.userauthority.UserAuthorityDAO;
 import org.medici.bia.dao.userhistory.UserHistoryDAO;
 import org.medici.bia.dao.userpersonalnotes.UserPersonalNotesDAO;
 import org.medici.bia.dao.userrole.UserRoleDAO;
+import org.medici.bia.dao.volume.VolumeDAO;
 import org.medici.bia.domain.Annotation;
 import org.medici.bia.domain.Course;
 import org.medici.bia.domain.CourseCheckPoint;
@@ -86,6 +87,7 @@ import org.medici.bia.domain.UserHistory.Action;
 import org.medici.bia.domain.UserHistory.Category;
 import org.medici.bia.domain.UserPersonalNotes;
 import org.medici.bia.domain.UserRole;
+import org.medici.bia.domain.Volume;
 import org.medici.bia.exception.ApplicationThrowable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -143,6 +145,8 @@ public class TeachingServiceImpl implements TeachingService {
 	private UserPersonalNotesDAO userPersonalNotesDAO;
 	@Autowired
 	private UserRoleDAO userRoleDAO;
+	@Autowired
+	private VolumeDAO volumeDAO;
 	
 	public AnnotationDAO getAnnotationDAO() {
 		return annotationDAO;
@@ -296,6 +300,14 @@ public class TeachingServiceImpl implements TeachingService {
 		this.userRoleDAO = userRoleDAO;
 	}
 	
+	public VolumeDAO getVolumeDAO() {
+		return volumeDAO;
+	}
+
+	public void setVolumeDAO(VolumeDAO volumeDAO) {
+		this.volumeDAO = volumeDAO;
+	}
+
 	/* Service API implementations */
 	
 	/**
@@ -418,84 +430,123 @@ public class TeachingServiceImpl implements TeachingService {
 			throw new ApplicationThrowable(ApplicationError.MISSING_PARAMETER, "ADD NEW COURSE TOPIC --> course topic mode is missing");
 		}
 		
+		try {
+			return doCreateCourseTopic(topicTitle, course, mode, document, remoteAddress);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public ForumTopic addCourseTopicWithImage(Integer courseId, Integer imageId, String topicTitle, CourseTopicMode mode, String remoteAddress) throws ApplicationThrowable {
+		Course course = null;
+		Image image = null;
+		try {
+			course = getCourseDAO().find(courseId);
+			if (course == null) {
+				throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR, "ADD NEW COURSE TOPIC --> course [" + courseId + "] is missing");
+			}
+			image = getImageDAO().find(imageId);
+			if (image == null) {
+				throw new ApplicationThrowable(ApplicationError.NULLPOINTER_ERROR, "ADD NEW COURSE TOPIC --> image [" + imageId + "] is missing");
+			}
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+		
+		if (StringUtils.isNullableString(topicTitle)) {
+			throw new ApplicationThrowable(ApplicationError.MISSING_PARAMETER, "ADD NEW COURSE TOPIC --> course topic title is missing");
+		}
+		
+		if (mode == null) {
+			throw new ApplicationThrowable(ApplicationError.MISSING_PARAMETER, "ADD NEW COURSE TOPIC --> course topic mode is missing");
+		}
+		
 		Date now = new Date();
 		User user = getCurrentUser();
 		
-		try {
-			// Forum container creation
-			Forum container = new Forum();
-			SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
-			String nowdate = date.format(new Date()); 
-			container.setTitle(topicTitle.trim() + " resources");
-			// container.setDescription("Resources of " + topicTitle.trim());
-			container.setDescription("Created " + nowdate);
-			// the forum container must not have a document, it is only a topic container
-			// container.setDocument(document);
-			container.setForumParent(course.getForum());
-			container.setFullPath(course.getForum().getFullPath()); // To do not violate the table constraint
-			container.setHierarchyLevel(course.getForum().getHierarchyLevel() + 1);
-			container.setDispositionOrder(0);
-			container.setStatus(Forum.Status.ONLINE);
-			container.setType(Forum.Type.FORUM);
-			container.setSubType(Forum.SubType.COURSE);
-			container.setDateCreated(now);
-			container.setLastUpdate(now);
-			container.setPostsNumber(0);
-			container.setTopicsNumber(1); // it will contain the collaborative transcription topic
-			container.setSubForumsNumber(0);
-			container.setLogicalDelete(Boolean.FALSE);
-
-			getForumDAO().persist(container);
-			getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, container));
-
-			container.setFullPath(container.getFullPath() + container.getForumId() + ".");
-			// increase the course subforums number
-			increaseSubForumsNumber(course.getForum());
+		Volume volume = getVolumeDAO().findVolume(image.getVolNum(), image.getVolLetExt());
+		if (volume == null) {
+			// if no volume is found we create it (--> image is stored in the tblImages with the upload processes)
+			volume = new Volume(image.getVolNum(), image.getVolLetExt());
+			volume.setDateCreated(now);
+			volume.setLastUpdate(now);
+			volume.setResearcher(user.getInitials());
+			volume.setCreatedBy(user);
+			volume.setLastUpdateBy(user);
+			volume.setStartDate(10101);
+			volume.setEndDate(10101);
+			volume.setVolTobeVetted(Boolean.FALSE);
+			volume.setVolVetted(Boolean.FALSE);
+			volume.setBound(Boolean.FALSE);
+			volume.setFolsNumbrd(Boolean.FALSE);
+			volume.setOldAlphaIndex(Boolean.FALSE);
+			volume.setItalian(Boolean.FALSE);
+			volume.setSpanish(Boolean.FALSE);
+			volume.setEnglish(Boolean.FALSE);
+			volume.setLatin(Boolean.FALSE);
+			volume.setGerman(Boolean.FALSE);
+			volume.setFrench(Boolean.FALSE);
+			volume.setCipher(Boolean.FALSE);
+			volume.setPrintedDrawings(Boolean.FALSE);
+			volume.setPrintedMaterial(Boolean.FALSE);
+			volume.setDigitized(Boolean.TRUE);
+			volume.setLogicalDelete(Boolean.FALSE);
+			volume.setStaffMemo("This volume is used for uploaded images");
 			
-			ForumOption forumOption = ForumUtils.getForumOptionForForumTopicContainer(container);
-			getForumOptionDAO().persist(forumOption);
-			
-			// Course Topic creation
-			ForumTopic courseTopic = new ForumTopic();
-			courseTopic.setForum(container);
-			courseTopic.setDocument(document);
-			courseTopic.setSubject(topicTitle.trim());
-			courseTopic.setDateCreated(now);
-			courseTopic.setLastUpdate(now);
-			
-			courseTopic.setUser(user);
-			courseTopic.setIpAddress(remoteAddress);
-			courseTopic.setTotalReplies(0);
-			courseTopic.setTotalViews(0);
-			courseTopic.setLastPost(null);
-			courseTopic.setFirstPost(null);
-			courseTopic.setLogicalDelete(Boolean.FALSE);
-			courseTopic.setLocked(Boolean.FALSE);
-			
-			getForumTopicDAO().persist(courseTopic);
-			
-			// Course Topic Option creation
-			CourseTopicOption courseTopicOption = new CourseTopicOption();
-			courseTopicOption.setCourseTopic(courseTopic);
-			courseTopicOption.setMode(mode);
-			
-			getCourseTopicOptionDAO().persist(courseTopicOption);
-			
-			// increase the number of topics of the course
-			increaseForumTopicsNumber(course.getForum());
-			
-			getUserHistoryDAO().persist(new UserHistory(user, "Create new course topic", Action.CREATE, Category.FORUM_TOPIC, courseTopic));
-			
-			// topic subscription
-			for(CoursePeople coursePeople : getCoursePeople(course)) {
-				if (Boolean.TRUE.equals(coursePeople.getUserRole().getUser().getForumTopicSubscription()) &&
-						Boolean.TRUE.equals(coursePeople.getSubscription())) {
-					ForumTopicWatch personTopicWatch = new ForumTopicWatch(courseTopic, coursePeople.getUserRole().getUser());
-					getForumTopicWatchDAO().persist(personTopicWatch);
-				}
+			try {
+				getVolumeDAO().persist(volume);
+			} catch (Throwable th) {
+				throw new ApplicationThrowable(th);
 			}
+		}
+		
+		List<Document> documents = getDocumentDAO().getDocumentsByImage(image);
+		Document document = documents.size() > 0 ? documents.get(0) : null;
+		if (document == null) {
+			// if no document is linked to the provided image a new document is created
+			document = new Document();
+			document.setLogicalDelete(Boolean.FALSE);
+			document.setVolume(volume);
+			document.setResearcher(user.getInitials());
+			document.setDateCreated(now);
+			document.setLastUpdate(now);
+			document.setCreatedBy(user);
+			document.setLastUpdateBy(user);
+			document.setFolioNum(image.getImageProgTypeNum());
+			document.setTranscribeFolioNum(image.getImageProgTypeNum());
+			document.setFolioMod(image.getMissedNumbering());
+			document.setTranscribeFolioMod(image.getMissedNumbering());
+			document.setFolioRectoVerso(image.getImageRectoVerso() != null ? Document.RectoVerso.convertFromString(image.getImageRectoVerso().toString()) : null);
+			document.setTranscribeFolioRectoVerso(image.getImageRectoVerso() != null ? Document.RectoVerso.convertFromString(image.getImageRectoVerso().toString()) : null);
+			document.setNewEntry(Boolean.FALSE);
+			document.setContDisc(Boolean.FALSE);
+			document.setUnpaged(Boolean.FALSE);
+			document.setDocDate(10101);
+			document.setSortableDate("0000 00 00");
+			document.setSortableDateInt(0);
+			document.setReckoning(Boolean.FALSE);
+			document.setUndated(Boolean.TRUE);
+			document.setDateUns(Boolean.FALSE);
+			document.setSenderPeopleUnsure(Boolean.FALSE);
+			document.setSenderPlaceUnsure(Boolean.FALSE);
+			document.setRecipientPeopleUnsure(Boolean.FALSE);
+			document.setRecipientPlaceUnsure(Boolean.FALSE);
+			document.setGraphic(Boolean.FALSE);
 			
-			return courseTopic;
+			try {
+				getDocumentDAO().persist(document);
+			} catch (Throwable th) {
+				throw new ApplicationThrowable(th);
+			}
+		}
+		
+		try {
+			return doCreateCourseTopic(topicTitle, course, mode, document, remoteAddress);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -1137,6 +1188,18 @@ public class TeachingServiceImpl implements TeachingService {
 	public ForumTopic findCourseTopic(Integer topicId) throws ApplicationThrowable {
 		try {
 			return getForumTopicDAO().find(topicId);
+		} catch (Throwable th) {
+			throw new ApplicationThrowable(th);
+		}
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Image findImage(Integer imageId) throws ApplicationThrowable {
+		try {
+			return getImageDAO().find(imageId);
 		} catch (Throwable th) {
 			throw new ApplicationThrowable(th);
 		}
@@ -2389,6 +2452,86 @@ public class TeachingServiceImpl implements TeachingService {
 		getUserHistoryDAO().persist(new UserHistory(user, "Add course transcription post", Action.CREATE, Category.FORUM_POST, post));
 		
 		return coursePostExt;
+	}
+	
+	private ForumTopic doCreateCourseTopic(String topicTitle, Course course, CourseTopicMode mode, Document document, String ipAddress) throws PersistenceException {
+		Date now = new Date();
+		User user = getCurrentUser();
+		
+		// Forum container creation
+		Forum container = new Forum();
+		SimpleDateFormat date = new SimpleDateFormat("MM/dd/yyyy");
+		String nowdate = date.format(new Date()); 
+		container.setTitle(topicTitle.trim() + " resources");
+		// container.setDescription("Resources of " + topicTitle.trim());
+		container.setDescription("Created " + nowdate);
+		// the forum container must not have a document, it is only a topic container
+		// container.setDocument(document);
+		container.setForumParent(course.getForum());
+		container.setFullPath(course.getForum().getFullPath()); // To do not violate the table constraint
+		container.setHierarchyLevel(course.getForum().getHierarchyLevel() + 1);
+		container.setDispositionOrder(0);
+		container.setStatus(Forum.Status.ONLINE);
+		container.setType(Forum.Type.FORUM);
+		container.setSubType(Forum.SubType.COURSE);
+		container.setDateCreated(now);
+		container.setLastUpdate(now);
+		container.setPostsNumber(0);
+		container.setTopicsNumber(1); // it will contain the collaborative transcription topic
+		container.setSubForumsNumber(0);
+		container.setLogicalDelete(Boolean.FALSE);
+
+		getForumDAO().persist(container);
+		getUserHistoryDAO().persist(new UserHistory(user, "Create new forum", Action.CREATE, Category.FORUM, container));
+
+		container.setFullPath(container.getFullPath() + container.getForumId() + ".");
+		// increase the course subforums number
+		increaseSubForumsNumber(course.getForum());
+		
+		ForumOption forumOption = ForumUtils.getForumOptionForForumTopicContainer(container);
+		getForumOptionDAO().persist(forumOption);
+		
+		// Course Topic creation
+		ForumTopic courseTopic = new ForumTopic();
+		courseTopic.setForum(container);
+		courseTopic.setDocument(document);
+		courseTopic.setSubject(topicTitle.trim());
+		courseTopic.setDateCreated(now);
+		courseTopic.setLastUpdate(now);
+		
+		courseTopic.setUser(user);
+		courseTopic.setIpAddress(ipAddress);
+		courseTopic.setTotalReplies(0);
+		courseTopic.setTotalViews(0);
+		courseTopic.setLastPost(null);
+		courseTopic.setFirstPost(null);
+		courseTopic.setLogicalDelete(Boolean.FALSE);
+		courseTopic.setLocked(Boolean.FALSE);
+		
+		getForumTopicDAO().persist(courseTopic);
+		
+		// Course Topic Option creation
+		CourseTopicOption courseTopicOption = new CourseTopicOption();
+		courseTopicOption.setCourseTopic(courseTopic);
+		courseTopicOption.setMode(mode);
+		
+		getCourseTopicOptionDAO().persist(courseTopicOption);
+		
+		// increase the number of topics of the course
+		increaseForumTopicsNumber(course.getForum());
+		
+		getUserHistoryDAO().persist(new UserHistory(user, "Create new course topic", Action.CREATE, Category.FORUM_TOPIC, courseTopic));
+		
+		// topic subscription
+		for(CoursePeople coursePeople : getCoursePeople(course)) {
+			if (Boolean.TRUE.equals(coursePeople.getUserRole().getUser().getForumTopicSubscription()) &&
+					Boolean.TRUE.equals(coursePeople.getSubscription())) {
+				ForumTopicWatch personTopicWatch = new ForumTopicWatch(courseTopic, coursePeople.getUserRole().getUser());
+				getForumTopicWatchDAO().persist(personTopicWatch);
+			}
+		}
+		
+		return courseTopic;
 	}
 	
 	/**

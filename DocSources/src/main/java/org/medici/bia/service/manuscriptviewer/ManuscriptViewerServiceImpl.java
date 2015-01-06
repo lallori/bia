@@ -758,7 +758,8 @@ public class ManuscriptViewerServiceImpl implements ManuscriptViewerService {
 				documentExplorer.getImage().setInsertLet(document.getInsertLet());
 				documentExplorer.getImage().setImageProgTypeNum(searchForTranscribeFolio ? document.getTranscribeFolioNum() : document.getFolioNum());
 				documentExplorer.getImage().setMissedNumbering(searchForTranscribeFolio ? document.getTranscribeFolioMod() : document.getFolioMod());
-				documentExplorer.getImage().setImageType(ImageType.C);
+				// If volume number is 0 (zero) the images are stored with 'Other' type.
+				documentExplorer.getImage().setImageType(document.getVolume().getVolNum() > 0 ? ImageType.C : ImageType.O);
 				documentExplorer.getImage().setImageRectoVerso(
 					searchForTranscribeFolio ?
 					(document.getTranscribeFolioRectoVerso() != null ? ImageRectoVerso.convertFromString(document.getTranscribeFolioRectoVerso().toString()) : null) :

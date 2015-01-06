@@ -4750,6 +4750,18 @@ ul#network a {
 
 /* Manage Lessons Image */
 
+.iframeFlipImage { /* used in Show Image Preview - #body_right */
+	z-index:-1;
+	width:475px;
+	margin-left:10px;
+	height:350px;
+	margin-top:10px;
+	z-index:-1;
+	border: 1px solid;
+	-moz-border-radius: 4px;
+	border-radius: 4px;	
+}
+
 #imagesForLessonsTitleSection {
 	margin-top: 10px;
 }
@@ -4780,6 +4792,7 @@ ul#network a {
 	border-left: 1px solid #dcc0ba;
 	border-right: 1px solid #dcc0ba;
 	text-align: center;
+	word-break: break-all;
 }
 
 #imagesTable th[columnid='0'] {
@@ -4801,8 +4814,26 @@ ul#network a {
 	width: 17%;
 }
 
+#imagesTable td a.createLesson {
+	width: 20px;
+	height: 22px;
+	background: url(${contextPath}/images/1024/transcription_icon.png) no-repeat;
+	background-size: 20px 22px;
+	display: inline-block;
+	text-align: center;
+}
+
+#imagesTable td a.showPreview {
+	width: 20px;
+	height: 22px;
+	background: url(${contextPath}/images/1024/button_showManuscViewer.png) no-repeat;
+	background-size: 20px 22px;
+	display: inline-block;
+	text-align: center;
+}
+
 #imagesTable tr {
-	height: 25px;
+	height: 30px;
 }
 
 #imagesTable tr[class='titleRow'] {
@@ -4905,6 +4936,7 @@ ul#network a {
 	border-left: 1px solid #dcc0ba;
 	border-right: 1px solid #dcc0ba;
 	padding-left: 5px;
+	word-break: break-all;
 }
 
 #fileListSection #fileListTable tr[class='listRow'] .col2 {
@@ -5030,6 +5062,7 @@ ul#network a {
 	width: 40%;
 	padding-left: 5px;
 	border: 1px solid #dcc0ba;
+	word-break: break-all;
 }
 
 #uploadModal .tbody .bodyTable .col2 {

@@ -114,6 +114,32 @@ public interface TeachingService {
 			String remoteAddress) throws ApplicationThrowable;
 	
 	/**
+	 * This method creates a new course topic ({@link ForumTopic}) in a new course container ({@link Forum}).<br/>
+	 * It uses the provided image to determine which document has to be attached to the course topic. If no document is linked to the
+	 * provided image a new document is created.<br/><br/>
+	 * NOTE: 
+	 * <ul>
+	 * <li>do not use this method when you only want to add a topic in a course container</li>
+	 * <li>use this method to create a course topic from an uploaded image</li>
+	 * <li>if the image is linked to a non existent volume we create this</li>
+	 * </ul>
+	 * 
+	 * @param courseId the course identifier
+	 * @param imageId the image identifier
+	 * @param topicTitle the course topic title
+	 * @param mode the course topic mode
+	 * @param remoteAddress the current user address
+	 * @return the created course topic (as {@link ForumTopic})
+	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
+	 */
+	ForumTopic addCourseTopicWithImage(
+			Integer courseId, 
+			Integer imageId, 
+			String topicTitle, 
+			CourseTopicMode mode, 
+			String remoteAddress) throws ApplicationThrowable;
+	
+	/**
 	 * This method creates a new post in a transcription topic.
 	 * 
 	 * @param courseTopicId the topic identifier
@@ -272,6 +298,15 @@ public interface TeachingService {
 	 * @throws ApplicationThrowable if an error occurs while the service is handling the request
 	 */
 	ForumTopic findCourseTopic(Integer topicId) throws ApplicationThrowable;
+	
+	/**
+	 * This method returns the image by its identifier.
+	 * 
+	 * @param imageId the image identifier
+	 * @return the image found
+	 * @throws ApplicationThrowable
+	 */
+	Image findImage(Integer imageId) throws ApplicationThrowable;
 	
 	/**
 	 * This method returns all active courses

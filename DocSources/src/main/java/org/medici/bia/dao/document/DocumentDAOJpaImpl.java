@@ -56,6 +56,8 @@ import org.medici.bia.common.pagination.PaginationFilter.SortingCriteria;
 import org.medici.bia.common.search.Search;
 import org.medici.bia.dao.JpaDao;
 import org.medici.bia.domain.Document;
+import org.medici.bia.domain.Image;
+import org.medici.bia.domain.Image.ImageRectoVerso;
 import org.medici.bia.domain.SearchFilter.SearchType;
 import org.springframework.stereotype.Repository;
 
@@ -545,6 +547,39 @@ public class DocumentDAOJpaImpl extends JpaDao<Integer, Document> implements Doc
 		}
 		
 		return resultMap;
+	}
+	
+	@Override
+	public List<Document> getDocumentsByImage(Image image) throws PersistenceException {
+		String jpql = "SELECT doc FROM Document AS doc, Volume AS vol WHERE vol.volNum = :volNum"
+			+ (image.getVolLetExt() != null ? " AND vol.volLetExt = :volLetExt" : " AND vol.volLetExt IS NULL")
+			+ " AND doc.volume = vol AND doc.logicalDelete = false"
+			+ (image.getInsertNum() != null ? " AND doc.insertNum = :insertNum" : " AND doc.insertNum IS NULL")
+			+ (image.getInsertLet() != null ? " AND doc.insertLet = :insertLet" : " AND doc.insertLet IS NULL")
+			+ " AND doc.transcribeFolioNum = :folioNum"
+			+ (image.getMissedNumbering() != null ? " AND doc.transcribeFolioMod = :folioMod" : " AND doc.transcribeFolioMod IS NULL")
+			+ (image.getImageRectoVerso() != null ? " AND doc.transcribeFolioRectoVerso = :folioRV" : " AND doc.transcribeFolioRectoVerso IS NULL");
+		
+		Query query = getEntityManager().createQuery(jpql);
+		query.setParameter("volNum", image.getVolNum());
+		if (image.getVolLetExt() != null) {
+			query.setParameter("volLetExt", image.getVolLetExt());
+		}
+		if (image.getInsertNum() != null) {
+			query.setParameter("insertNum", image.getInsertNum());
+		}
+		if (image.getInsertLet() != null) {
+			query.setParameter("insertLet", image.getInsertLet());
+		}
+		query.setParameter("folioNum", image.getImageProgTypeNum());
+		if (image.getMissedNumbering() != null) {
+			query.setParameter("folioMod", image.getMissedNumbering());
+		}
+		if (image.getImageRectoVerso() != null) {
+			query.setParameter("folioRV", ImageRectoVerso.R.equals(image.getImageRectoVerso()) ? Document.RectoVerso.R : ImageRectoVerso.V.equals(image.getImageRectoVerso()) ? Document.RectoVerso.V : Document.RectoVerso.N);
+		}
+		
+		return getResultList(query);
 	}
 	
 	@Override

@@ -57,49 +57,55 @@
 					// Disable caching of AJAX responses */
 					cache: false
 				});
-				
-				// RR: Added volume informations and insert informations (if needed)
-				var volExt = "${documentExplorer.image.volLetExt}";
-				var insNum = "${documentExplorer.image.insertNum}";
-				var insExt = "${documentExplorer.image.insertLet}";
-				var credit = '<span style=\'font-size:16px\'><fmt:message key="mview.showDocumentInManuscriptViewerHtml.volume"/> ${documentExplorer.image.volNum}' + (volExt != '' ? ' <fmt:message key="mview.showDocumentInManuscriptViewerHtml.extension"/> '+volExt : '') + '&nbsp; - </span>';
-				if (insNum != '')
-					credit += '<span style=\'font-size:16px\'><fmt:message key="mview.showDocumentInManuscriptViewerHtml.insert"/> ' + insNum + (insExt != '' ? ' <fmt:message key="mview.showDocumentInManuscriptViewerHtml.extension"/> '+insExt : '') + '&nbsp; - </span>';
+
+				var credit;
+				if ("${documentExplorer.image.volNum}" != '0') {
+					// RR: Added volume informations and insert informations (if needed)
+					var volExt = "${documentExplorer.image.volLetExt}";
+					var insNum = "${documentExplorer.image.insertNum}";
+					var insExt = "${documentExplorer.image.insertLet}";
+					credit = '<span style=\'font-size:16px\'><fmt:message key="mview.showDocumentInManuscriptViewerHtml.volume"/> ${documentExplorer.image.volNum}' + (volExt != '' ? ' <fmt:message key="mview.showDocumentInManuscriptViewerHtml.extension"/> '+volExt : '') + '&nbsp; - </span>';
+					if (insNum != '')
+						credit += '<span style=\'font-size:16px\'><fmt:message key="mview.showDocumentInManuscriptViewerHtml.insert"/> ' + insNum + (insExt != '' ? ' <fmt:message key="mview.showDocumentInManuscriptViewerHtml.extension"/> '+insExt : '') + '&nbsp; - </span>';
+						
+					var imageName = "${documentExplorer.image.imageName}";
 					
-				var imageName = "${documentExplorer.image.imageName}";
-				
-				if ("${documentExplorer.image.imageType}" == 'R') {
-					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.indexOfNames"/>&nbsp;</span>';
-				} else if ("${documentExplorer.image.imageType}" == 'C') {
-					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.folio"/>&nbsp;</span>';
-				} else if ("${documentExplorer.image.imageType}" == 'A') {
-					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.allegato"/>&nbsp;</span>';
-				} else if ("${documentExplorer.image.imageType}" == 'G') {
-					credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.guardia"/>&nbsp;</span>';
-				} else if ("${documentExplorer.image.imageType}" == 'O') {
-					//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
-					if(imageName.indexOf("COPERTA") != -1){
-						credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.coperta"/>&nbsp;</span>;';
+					if ("${documentExplorer.image.imageType}" == 'R') {
+						credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.indexOfNames"/>&nbsp;</span>';
+					} else if ("${documentExplorer.image.imageType}" == 'C') {
+						credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.folio"/>&nbsp;</span>';
+					} else if ("${documentExplorer.image.imageType}" == 'A') {
+						credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.allegato"/>&nbsp;</span>';
+					} else if ("${documentExplorer.image.imageType}" == 'G') {
+						credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.guardia"/>&nbsp;</span>';
+					} else if ("${documentExplorer.image.imageType}" == 'O') {
+						//MD: Is it correct the imageType 'O' for "costola" and "coperta"?
+						if(imageName.indexOf("COPERTA") != -1){
+							credit += '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.coperta"/>&nbsp;</span>;';
+						}
+					} else {
+			    		credit += ' ';
+			    	}
+					
+					credit+= '<span style=\'font-size:22px\'>' + "${documentExplorer.image.imageProgTypeNum}";
+					
+					if ("${documentExplorer.image.missedNumbering}") {
+						credit += ' ' + "${documentExplorer.image.missedNumbering}";
+					}
+		
+					if ("${documentExplorer.image.imageRectoVerso}" == 'R') {
+						credit += '</span>' + ' recto' + '</span>';
+					} else if("${documentExplorer.image.imageRectoVerso}" == 'V'){
+						credit += '</span>' + ' verso' + '</span>';
+					}
+					
+					//MD:The last control is to verify if the image is a spine
+					if(imageName.indexOf("SPI") != -1){
+						credit = '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.spine"/>' + '</span>';
 					}
 				} else {
-		    		credit += ' ';
-		    	}
-				
-				credit+= '<span style=\'font-size:22px\'>' + "${documentExplorer.image.imageProgTypeNum}";
-				
-				if ("${documentExplorer.image.missedNumbering}") {
-					credit += ' ' + "${documentExplorer.image.missedNumbering}";
-				}
-	
-				if ("${documentExplorer.image.imageRectoVerso}" == 'R') {
-					credit += '</span>' + ' recto' + '</span>';
-				} else if("${documentExplorer.image.imageRectoVerso}" == 'V'){
-					credit += '</span>' + ' verso' + '</span>';
-				}
-				
-				//MD:The last control is to verify if the image is a spine
-				if(imageName.indexOf("SPI") != -1){
-					credit = '<span style=\'font-size:16px\'>' + '<fmt:message key="mview.showDocumentInManuscriptViewerHtml.spine"/>' + '</span>';
+					// credits for volume 0 (zero)
+					credit = '<span style=\'font-size:16px\'>Uploaded Image [<i>${documentExplorer.image.imageTitle}</i>]</span>';
 				}
 				
 				iip = new IIPMooViewer( "targetframe", {

@@ -2019,8 +2019,14 @@ INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`,
 INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('iipimage.upload.path', 'Remote server image upload path', '/data/imgtmp/');
 INSERT INTO `tblApplicationProperty` (`id`, `help`, `value`) VALUES ('iipimage.upload.storagePathNumber', 'Remote server image storage path number', '2');
 
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowCreateLessonFromImageModalWindow', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowImagePreview', 'template.partialDOM');
+INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowImagePreviewInManuscriptViewer', 'template.manuscriptViewerHtmlSimpleDOM');
 INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowManageImagesForLessons', 'template.partialDOM');
 INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('teaching/ShowUploadNewImages', 'template.partialDOM');
 
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowCreateLessonFromImageModalWindow', 'main', '/WEB-INF/jsp/teaching/ShowCreateLessonFromImageModalWindow.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowImagePreview', 'main', '/WEB-INF/jsp/teaching/ShowImagePreview.jsp', 0);
+INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowImagePreviewInManuscriptViewer', 'manuscriptviewer', '/WEB-INF/jsp/teaching/ShowImagePreviewInManuscriptViewer.jsp', 0);
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowManageImagesForLessons', 'main', '/WEB-INF/jsp/teaching/ShowManageImagesForLessons.jsp', 0);
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowUploadNewImages', 'main', '/WEB-INF/jsp/teaching/ShowUploadNewImages.jsp', 0);
