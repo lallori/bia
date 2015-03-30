@@ -472,7 +472,7 @@ public class AjaxController {
 	 * @return
 	 */
 	@RequestMapping(value = {"/src/mview/UpdateAnnotations.json", "/de/mview/UpdateAnnotations.json"}, method = RequestMethod.POST)
-	public ModelAndView updateAnnotations(HttpServletRequest httpServletRequest) {
+	public Map<String, Object> updateAnnotations(HttpServletRequest httpServletRequest) {
 		Map<String, Object> model = new HashMap<String, Object>(0);
 		
 		String account = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
@@ -523,10 +523,12 @@ public class AjaxController {
 			model.put("annotations", getAnnotationsForView(null, imageAnnotationsMap.keySet()));
 			model.put("adminPrivileges", administrator);
 		} catch (ApplicationThrowable applicationThrowable) {
-			return new ModelAndView("responseKO", model);
+			model.put("operation", "KO");
+			model.put("error", applicationThrowable.getMessage() != null ? applicationThrowable.toString() : applicationThrowable.getCause().toString());
+			return model;
 		}
-		
-		return new ModelAndView("responseOK", model);
+		model.put("operation", "OK");
+		return model;
 	}
 	
 	/**

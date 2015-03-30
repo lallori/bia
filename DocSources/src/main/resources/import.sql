@@ -2007,6 +2007,9 @@ INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `type`, 
 -- annotations: text column has to be LONGTEXT
 ALTER TABLE `tblAnnotations` CHANGE COLUMN `text` `text` LONGTEXT NULL DEFAULT NULL AFTER `lastUpdate`;
 
+-- annotations: type column has to be longer than 10 chars (PHALEOGRAPHY has 11 length)
+ALTER TABLE `tblAnnotations` CHANGE COLUMN `type` `type` VARCHAR(15) NOT NULL AFTER `title`;
+
 -- make as transcribed and export tool
 INSERT INTO `tblApplicationTemplate` (`name`, `parentName`) VALUES ('annotation/ShowMakeTranscribedModalWindow', 'template.partialDOM');
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('annotation/ShowMakeTranscribedModalWindow', 'main', '/WEB-INF/jsp/annotation/ShowMakeTranscribedModal.jsp', 0);
