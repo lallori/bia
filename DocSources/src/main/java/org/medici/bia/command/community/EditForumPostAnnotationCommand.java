@@ -34,6 +34,7 @@ package org.medici.bia.command.community;
  *
  */
 public class EditForumPostAnnotationCommand {
+	private Integer annotationId;
 	private Integer postId;
 	private Integer forumId;
 	private Integer topicId;
@@ -41,6 +42,20 @@ public class EditForumPostAnnotationCommand {
 	private String subject;
 	private String text;
 	
+	/**
+	 * @return the annotationId
+	 */
+	public Integer getAnnotationId() {
+		return annotationId;
+	}
+
+	/**
+	 * @param annotationId the annotationId to set
+	 */
+	public void setAnnotationId(Integer annotationId) {
+		this.annotationId = annotationId;
+	}
+
 	/**
 	 * @return the postId
 	 */
@@ -83,6 +98,13 @@ public class EditForumPostAnnotationCommand {
 	}
 	
 	/**
+	 * @return the subject
+	 */
+	public String getSubject() {
+		return subject;
+	}
+
+	/**
 	 * @param subject the subject to set
 	 */
 	public void setSubject(String subject) {
@@ -90,24 +112,17 @@ public class EditForumPostAnnotationCommand {
 	}
 	
 	/**
-	 * @return the subject
+	 * @return the topicId
 	 */
-	public String getSubject() {
-		return subject;
+	public Integer getTopicId() {
+		return topicId;
 	}
-	
+
 	/**
 	 * @param topicId the topicId to set
 	 */
 	public void setTopicId(Integer topicId) {
 		this.topicId = topicId;
-	}
-
-	/**
-	 * @return the topicId
-	 */
-	public Integer getTopicId() {
-		return topicId;
 	}
 
 	/**
