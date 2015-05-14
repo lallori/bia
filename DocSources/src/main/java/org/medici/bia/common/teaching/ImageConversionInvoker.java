@@ -27,6 +27,7 @@
  */
 package org.medici.bia.common.teaching;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.SystemUtils;
 import org.apache.log4j.Logger;
 import org.medici.bia.common.property.ApplicationPropertyManager;
@@ -57,7 +58,6 @@ public class ImageConversionInvoker {
 	
 	public int fire() {
 		try {
-			Runtime rt = Runtime.getRuntime();
 			Process process = null;
 			
 			if (SystemUtils.IS_OS_LINUX) {
@@ -72,11 +72,11 @@ public class ImageConversionInvoker {
 				logger.info("IMAGE CONVERSION TASK: Linux Operating System detected...");
 				String[] env = {"PATH=/bin:/usr/bin/"};
 				String[] commandArray = { ApplicationPropertyManager.getApplicationProperty("path.tmpdir") +
-						(ApplicationPropertyManager.getApplicationProperty("path.tmpdir").endsWith("/") ? "upload_images.sh" : "/upload_images.sh"), fileName, " '" + fileTitle + "' ", "imageOrder", "storagePath"} ;
-				logger.info("IMAGE CONVERSION TASK: launching command [" + commandArray[0] + commandArray[1] + commandArray[2] + commandArray[3] + commandArray[4] + "]");
-				
+						(ApplicationPropertyManager.getApplicationProperty("path.tmpdir").endsWith("/") ? "upload_images.sh" : "/upload_images.sh"), fileName, "'" + fileTitle + "'", "" + imageOrder, "" + storagePath} ;
+
 				try {
-					rt.exec(commandArray, env);
+					logger.info("IMAGE CONVERSION TASK: launching command : " + ArrayUtils.toString(commandArray));
+					process = Runtime.getRuntime().exec(commandArray, env);
 				} 
 				catch(Throwable th) {
 					logger.error("errore di esecuzione", th);
@@ -94,7 +94,14 @@ public class ImageConversionInvoker {
 				command[1] = "/C";
 				command[2] = realCommand;
 				
-				process = rt.exec(command);
+				try {
+					logger.info("IMAGE CONVERSION TASK: launching command : " + ArrayUtils.toString(command));
+
+					process = Runtime.getRuntime().exec(command);
+				} 
+				catch(Throwable th) {
+					logger.error("errore di esecuzione", th);
+				}
 			} else {
 				logger.error("IMAGE CONVERSION TASK: The detected Operating System is not supported...the task is aborted!");
 				return NOT_SUPPORTED_OS;
