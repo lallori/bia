@@ -73,9 +73,15 @@ public class ImageConversionInvoker {
 				String[] env = {"PATH=/bin:/usr/bin/"};
 				String[] commandArray = { ApplicationPropertyManager.getApplicationProperty("path.tmpdir") +
 						(ApplicationPropertyManager.getApplicationProperty("path.tmpdir").endsWith("/") ? "upload_images.sh" : "/upload_images.sh"), fileName, " '" + fileTitle + "' ", "imageOrder", "storagePath"} ;
-				logger.info("IMAGE CONVERSION TASK: launching command [" + commandArray[1] + commandArray[2] + commandArray[3] + commandArray[4] + "]");
+				logger.info("IMAGE CONVERSION TASK: launching command [" + commandArray[0] + commandArray[1] + commandArray[2] + commandArray[3] + commandArray[4] + "]");
 				
-				rt.exec(commandArray, env);
+				try {
+					rt.exec(commandArray, env);
+				} 
+				catch(Throwable th) {
+					logger.error("errore di esecuzione", th);
+				}
+				
 			} else if (SystemUtils.IS_OS_WINDOWS) {
 				// XXX for development environment: we suppose the 'insert_after_upload.bat' file is
 				// in the 'path.tmpdir' location
