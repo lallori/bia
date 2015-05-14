@@ -61,14 +61,20 @@ public class ImageConversionInvoker {
 			Process process = null;
 			
 			if (SystemUtils.IS_OS_LINUX) {
+//				logger.info("IMAGE CONVERSION TASK: Linux Operating System detected...");
+//				String[] env = {"PATH=/bin:/usr/bin/"};
+//				String scriptCommand = ApplicationPropertyManager.getApplicationProperty("path.tmpdir") + 
+//						(ApplicationPropertyManager.getApplicationProperty("path.tmpdir").endsWith("/") ? "upload_images.sh" : "/upload_images.sh");
+//				String cmd = scriptCommand + " " + fileName +  " '" + fileTitle + "' " + imageOrder + " " + storagePath;
+//				logger.info("IMAGE CONVERSION TASK: launching command [" + cmd + "]");
+//				
+//				process = rt.exec(cmd, env);
 				logger.info("IMAGE CONVERSION TASK: Linux Operating System detected...");
 				String[] env = {"PATH=/bin:/usr/bin/"};
-				String scriptCommand = ApplicationPropertyManager.getApplicationProperty("path.tmpdir") + 
-						(ApplicationPropertyManager.getApplicationProperty("path.tmpdir").endsWith("/") ? "upload_images.sh" : "/upload_images.sh");
-				String cmd = scriptCommand + " " + fileName +  " '" + fileTitle + "' " + imageOrder + " " + storagePath;
-				logger.info("IMAGE CONVERSION TASK: launching command [" + cmd + "]");
-				
-				process = rt.exec(cmd, env);
+				String[] commandArray = { ApplicationPropertyManager.getApplicationProperty("path.tmpdir") +
+						(ApplicationPropertyManager.getApplicationProperty("path.tmpdir").endsWith("/") ? "upload_images.sh" : "/upload_images.sh"), fileName, " '" + fileTitle + "' ", "imageOrder", "storagePath"} ;
+
+				 rt.exec(commandArray, env);
 			} else if (SystemUtils.IS_OS_WINDOWS) {
 				// XXX for development environment: we suppose the 'insert_after_upload.bat' file is
 				// in the 'path.tmpdir' location
