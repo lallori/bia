@@ -17,6 +17,6 @@ BEGIN
 	
 	INSERT INTO 
 		tblImages  (`volNum`, `imageName`, `imageType`, `imageRectoVerso`, `imageOrder`, `imageProgTypeNum`, `storagePath`, `dateCreated`, `imageTitle`) 
-	VALUES (0,  iName, 'O', 'N', iOrder + 1, pOrder, sPath, NOW(), iTitle);
+	VALUES (0,  iName, 'O', 'N', iOrder + 1, iOrder + 1, sPath, NOW(), iTitle);
 END //
 DELIMITER ;
