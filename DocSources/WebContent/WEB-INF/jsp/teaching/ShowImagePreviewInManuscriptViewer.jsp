@@ -18,7 +18,7 @@
 			updateAnnotationsUrl: '${UpdateAnnotationsURL}',
 			annotations: annotations,
 			annotationId: annotationId,*/
-			credit: '',
+			credit: '${image}',
 			enableEdit: false,
 			navigation: true,
 			showNavWindow: true,
