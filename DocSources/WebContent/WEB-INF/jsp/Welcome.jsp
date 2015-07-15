@@ -10,11 +10,10 @@
 		<h3>Welcome back <security:authentication property="principal.firstName"/>. <br /></h3>
 
 	  <div id="accordion">
-	  	<h1><fmt:message key="welcome.activityForums"/></h1>
+	  	<h1><fmt:message key="ACTIVITY IN COURSES"/></h1>
     
    		<div id="topDiscussions">
-   	
-   			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
+  				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
     			<h5><fmt:message key="welcome.most.teaching.transcriptions"/></h5>
     			<c:forEach var="extendedTopic" items="${teachingForumStatistics['MOST RECENT TRANSCRIPTION TOPICS']}">
     				<c:url var="showUserProfileURL" value="/community/ShowUserProfileForum.do">
@@ -103,8 +102,10 @@
     			</c:forEach>
     		</security:authorize>
     		
-    		<br />
-   			
+    	<br />
+    	</div>
+   		<h1><fmt:message key="welcome.activityForums"/></h1>
+   		<div id="topDiscussions1">
    			<h5><fmt:message key="welcome.most"/></h5>
    			<c:forEach var="discussion" items="${forumStatistics['MOST RECENT DISCUSSIONS']}" varStatus="status">
 	    		<c:url var="forumURL" value="/community/ShowTopicForum.do">
