@@ -10,7 +10,7 @@
 		<h3>Welcome back <security:authentication property="principal.firstName"/>. <br /></h3>
 
 	  <div id="accordion">
-	  	<h1><fmt:message key="ACTIVITY IN COURSES"/></h1>
+	  	<h1><fmt:message key="welcome.activityCourses"/></h1>
     
    		<div id="topDiscussions">
   				<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS, ROLE_STUDENTS">
@@ -102,7 +102,6 @@
     			</c:forEach>
     		</security:authorize>
     		
-    	<br />
     	</div>
    		<h1><fmt:message key="welcome.activityForums"/></h1>
    		<div id="topDiscussions1">
