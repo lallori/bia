@@ -7,7 +7,7 @@
 	<c:url var="ShowTopicsPlaceURL" value="/src/geobase/ShowTopicsPlacePagination.json"></c:url>
 	
 	<div class="yourSearchDiv">
-		<p><fmt:message key="geobase.showTopicsPlace.documentsTopic"/> <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
+		<p><fmt:message key="geobase.showTopicsPlace.documentsTopics"/> <font color="red" style="margin-left:5px">"${placeNameFull}"</font></p>
 		<p><fmt:message key="geobase.showTopicsPlace.totalRecordsFound"/> <span id="docTopic${placeAllId}" class="recordsNum"></span></p>
 	</div>
 	

@@ -182,7 +182,7 @@
 					</div>
 				</c:if>
 				<div class="row">
-					<div class="item"><fmt:message key="geobase.showDetailsPlace.placeAccents"/></div>
+					<div class="item"><fmt:message key="geobase.showDetailsPlace.withAccents"/></div>
 					<div class="value">${place.plType}</div>
 				</div>
 				<div class="row">
