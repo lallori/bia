@@ -72,7 +72,9 @@ public class ImageConversionInvoker {
 				logger.info("IMAGE CONVERSION TASK: Linux Operating System detected...");
 				String[] env = {"PATH=/bin:/usr/bin/"};
 				String[] commandArray = { ApplicationPropertyManager.getApplicationProperty("path.tmpdir") +
-						(ApplicationPropertyManager.getApplicationProperty("path.tmpdir").endsWith("/") ? "upload_images.sh" : "/upload_images.sh"), fileName, "'" + fileTitle + "'", "" + imageOrder, "" + storagePath} ;
+						//(ApplicationPropertyManager.getApplicationProperty("path.tmpdir").endsWith("/") ? "upload_images.sh" : "/upload_images.sh"), fileName, "'" + fileTitle + "'", "" + imageOrder, "" + storagePath} ;
+						(ApplicationPropertyManager.getApplicationProperty("path.tmpdir").endsWith("/") ? ApplicationPropertyManager.getApplicationProperty("upload.script") : 
+							"/" +  ApplicationPropertyManager.getApplicationProperty("upload.script")), fileName, "'" + fileTitle + "'", "" + imageOrder, "" + storagePath} ;
 				try {
 					logger.info("IMAGE CONVERSION TASK: launching command : " + ArrayUtils.toString(commandArray));
 					process = Runtime.getRuntime().exec(commandArray, env);
