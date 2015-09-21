@@ -888,6 +888,7 @@ public class AdvancedSearchVolume extends AdvancedSearchAbstract {
 
 		// Digitized
 		appendToJpaQuery(jpaQuery, getDigitizedSubQuery());
+		jpaQuery.append(" AND volNum <> 0"); //excludes volume for course images uploads!!
 		
 		//Languages
 		appendToJpaQuery(jpaQuery, getLanguagesSubQuery());
