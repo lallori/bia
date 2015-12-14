@@ -11,9 +11,9 @@ Bia is a Digital Interactive platform that allows to:
 
 
 # Authors
-Lorenzo Allori <lallori@medici.org> <lorenzo.allori@gmail.com> - Project Manager
-Lorenzo Pasquinelli <l.pasquinelli@gmail.com> - Software Architect
-Matteo Doni <donimatteo@gmail.com> - Developer
-Ronny Rinaldi <rinaldi.ronny@gmail.com> - Developer
-Joana Amill <joana.amill@gmail.com> - Front End Developer
+- Lorenzo Allori <lallori@medici.org> <lorenzo.allori@gmail.com> - Project Manager
+- Lorenzo Pasquinelli <l.pasquinelli@gmail.com> - Software Architect
+- Matteo Doni <donimatteo@gmail.com> - Developer
+- Ronny Rinaldi <rinaldi.ronny@gmail.com> - Developer
+- Joana Amill <joana.amill@gmail.com> - Front End Developer
 
