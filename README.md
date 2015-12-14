@@ -1,12 +1,18 @@
 # Bia (2010-2014)
 
-Funded by The Andrew W. Mellon Foundation and developed by the Medici Archive Project, 
+Funded by the Andrew W. Mellon Foundation and developed by the Medici Archive Project (http://www.medici.org), 
+BIA is an online digital interactive platform that allows you to: 
 
-Bia is a Digital Interactive platform that allows to: 
-- Preserve Early Modern manucripts with digitized images online 
-- Enhance Research possibilities through outsourcing 
-- Involve the world in scholarly discourse 
-- Teach and Learn Peleography Online 
+- Preserve early modern manucripts with digitized images 
+- Fully qualify early modern letters with archival metadata 
+- Transcribe and summarize archival material
+- Tag and associate documents with places, persons, and research categories
+- Provide an advanced search tool to query uploaded material 
+- Personalized features such as marked list and messages
+- Contribute to the platform offsite
+- Dedicated forums for discussion of documents
+- Teach and learn paleography 
+
 
 
 
