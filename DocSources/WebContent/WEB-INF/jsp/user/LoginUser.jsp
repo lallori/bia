@@ -50,7 +50,7 @@
 			<div class="buttons">
 				<a id="register_here" href="<c:url value="/user/RegisterUser.do"/>"></a>
 				
-				<a href="http://courses.medici.org/" id="onlineCourses"></a><!-- MAP online COURSES -->
+<!-- 				<a href="http://courses.medici.org/" id="onlineCourses"></a>MAP online COURSES -->
 			</div>
 			
 <!-- 			<div id="guest"> -->
