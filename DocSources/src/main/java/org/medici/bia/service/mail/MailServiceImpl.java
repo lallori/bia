@@ -413,14 +413,14 @@ public class MailServiceImpl implements MailService {
 							"{",
 							"}"));
 				}
-				getJavaMailSender().send(message);
+				//getJavaMailSender().send(message);
 	
 			} else {
-				logger.error("Mail for ForumPost reply not sended for user " + currentUser.getAccount() + ". Check mail field on tblUser for account " + currentUser.getAccount());
+				//logger.error("Mail for ForumPost reply not sended for user " + currentUser.getAccount() + ". Check mail field on tblUser for account " + currentUser.getAccount());
 			}
 			
-			forumPostReplied.setMailSended(Boolean.TRUE);
-			forumPostReplied.setMailSendedDate(new Date());
+			//forumPostReplied.setMailSended(Boolean.TRUE);
+			//forumPostReplied.setMailSendedDate(new Date());
 			
 			return Boolean.TRUE;
 		} catch (Throwable throwable) {
