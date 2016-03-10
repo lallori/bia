@@ -64,14 +64,14 @@
 							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${spine}&WID=120"/>">
 							<b><fmt:message key="volbase.showDetailsVolume.volumeSpine"/></b>
 							<a id="ShowVolumeInManuscriptViewer" title="<fmt:message key="volbase.showDetailsVolume.showInManuscript"/>" href="${ShowVolumeInManuscriptViewerURL}"></a>
-							<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="<fmt:message key="volbase.showDetailsVolume.showPreview"/>"></a>
+							<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="<fmt:message key="volbase.showDetailsVolume.help.showPreview"/>"></a>
 						</div>
 					</c:when>
 					<c:when test="${not empty image}">
 						<div id="SpineVolumeDigitDiv">
 							<img src="<c:url value="/mview/IIPImageServer.do?FIF=${image}&WID=120"/>">
 							<a id="ShowVolumeInManuscriptViewer" title="<fmt:message key="volbase.showDetailsVolume.showInManuscript"/>" href="${ShowVolumeInManuscriptViewerURL}"></a>
-							<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="<fmt:message key="volbase.showDetailsVolume.showPreview"/>"></a>
+							<a id="ShowVolumeInVolumeExplorer" href="${ShowExplorerVolumeURL}" title="<fmt:message key="volbase.showDetailsVolume.help.showPreview"/>"></a>
 						</div>
 					</c:when>
 					<c:otherwise>

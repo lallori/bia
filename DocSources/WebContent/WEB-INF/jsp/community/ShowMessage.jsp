@@ -18,7 +18,7 @@
 	
 	<c:if test="${userMessage.user.account == account}">
 	<div id="message">
-		<h3><fmt:message key="community.showMessage.showMessage"/></h3>
+		<h3><fmt:message key="community.showMessage.message"/></h3>
 		<div class="list">
         	<div class="row">
             	<div class="item"><fmt:message key="community.showMessage.from"/></div> 
