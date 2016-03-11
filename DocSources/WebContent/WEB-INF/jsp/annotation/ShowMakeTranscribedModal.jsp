@@ -113,7 +113,7 @@
 						
 						$j("#markAsTranscribedYesBtn").click(function() {
 							$j("#makeAsTranscribedModalQuestion").hide();
-							Modalbox.resize(70, 30);
+							//Modalbox.resize(70, 30);
 							$j("#makeAsTranscribedModalFormDiv").show();
 							return false;
 						});
