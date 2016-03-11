@@ -66,7 +66,7 @@ public class UserMessage implements Serializable{
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column (name="\"messageReadedDate\"")
 	private Date readedDate;
-	@Column (name="\"messageSubject\"", length=100)
+	@Column (name="\"messageSubject\"", length=2000)
 	private String subject;
 	@Column (name="\"messageBody\"", length=4000)
 	private String body;

@@ -128,7 +128,8 @@ public class ForumPostReplyMailJob {
 					if (!currentUser.equals(forumPost.getUser())) {
 						try {
 							log.info("ForumPostReplyMailJob: sending mail to [" + currentUser.getAccount() + "] for post [" + forumPost.getPostId() + "]");
-							getMailService().sendForumPostReplyNotificationMail(forumPostReplied, forumPost, currentUser);
+							//getMailService().sendForumPostReplyNotificationMail(forumPostReplied, forumPost, currentUser);
+							getMailService().sendForumPostReplyNotificationMessage(forumPostReplied, forumPost, currentUser);
 							log.info("ForumPostReplyMailJob: a mail has been sent to [" + currentUser.getAccount() + "]");
 						} catch (Exception e) {
 							log.error("ForumPostReplyMailJob: error during the mail delivery to [" + currentUser.getAccount() + "]");

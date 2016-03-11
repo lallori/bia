@@ -636,7 +636,7 @@ public class CommunityServiceImpl implements CommunityService {
 			//MD: Persist two messages for both user that have the message in the inbox (recipient) and outbox(sender)
 			User outBoxUser = getUserDAO().findUser(userMessage.getSender());
 			User inBoxUser = getUserDAO().findUser(userMessage.getRecipient());
-			
+			if(!userMessage.getSender().equals("Staff")){
 			UserMessage outBoxMessage = new UserMessage();
 			outBoxMessage.setSubject(userMessage.getSubject());
 			outBoxMessage.setBody(userMessage.getBody());
@@ -651,7 +651,7 @@ public class CommunityServiceImpl implements CommunityService {
 			}
 			outBoxMessage.setUser(outBoxUser);
 			getUserMessageDAO().persist(outBoxMessage);
-			
+			}
 			UserMessage inBoxMessage = new UserMessage();
 			inBoxMessage.setSubject(userMessage.getSubject());
 			inBoxMessage.setBody(userMessage.getBody());

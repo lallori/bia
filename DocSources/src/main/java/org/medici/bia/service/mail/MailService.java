@@ -78,7 +78,7 @@ public interface MailService {
 	 * @return
 	 */
 	Boolean sendForumPostReplyNotificationMail(ForumPostNotified forumPostReplied, ForumPost forumPost, User currentUser);
-
+	Boolean sendForumPostReplyNotificationMessage(ForumPostNotified forumPostReplied, ForumPost forumPost, User currentUser);
 	/**
 	 * 
 	 * @param user

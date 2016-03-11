@@ -44,6 +44,7 @@ import org.medici.bia.dao.emailmessageuser.EmailMessageUserDAO;
 import org.medici.bia.dao.forumpostnotified.ForumPostNotifiedDAO;
 import org.medici.bia.dao.lockeduser.LockedUserDAO;
 import org.medici.bia.dao.passwordchangerequest.PasswordChangeRequestDAO;
+import org.medici.bia.dao.usermessage.UserMessageDAO;
 import org.medici.bia.domain.ActivationUser;
 import org.medici.bia.domain.ApprovationUser;
 import org.medici.bia.domain.CourseTopicOption;
@@ -56,6 +57,9 @@ import org.medici.bia.domain.ForumTopic;
 import org.medici.bia.domain.LockedUser;
 import org.medici.bia.domain.PasswordChangeRequest;
 import org.medici.bia.domain.User;
+import org.medici.bia.domain.UserMessage;
+import org.medici.bia.domain.UserMessage.RecipientStatus;
+import org.medici.bia.service.community.CommunityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
@@ -100,8 +104,17 @@ public class MailServiceImpl implements MailService {
 	private MessageSource messageSource;
 	@Autowired
 	private PasswordChangeRequestDAO passwordChangeRequestDAO; 
+	@Autowired
+	private CommunityService communityService;
+	@Autowired
+	private UserMessageDAO userMessageDAO;
 
 	private final Logger logger = Logger.getLogger(this.getClass());
+	
+	public UserMessageDAO getUserMessageDAO(){
+		return userMessageDAO;
+	}
+	
 	
 	/**
 	 * @return the activationUserDAO
@@ -246,6 +259,9 @@ public class MailServiceImpl implements MailService {
 		this.passwordChangeRequestDAO = passwordChangeRequestDAO;
 	}
 
+	
+	
+	
 	/**
 	 * 
 	 */
@@ -413,14 +429,14 @@ public class MailServiceImpl implements MailService {
 							"{",
 							"}"));
 				}
-				//getJavaMailSender().send(message);
+				getJavaMailSender().send(message);
 	
 			} else {
-				//logger.error("Mail for ForumPost reply not sended for user " + currentUser.getAccount() + ". Check mail field on tblUser for account " + currentUser.getAccount());
+				logger.error("Mail for ForumPost reply not sended for user " + currentUser.getAccount() + ". Check mail field on tblUser for account " + currentUser.getAccount());
 			}
 			
-			//forumPostReplied.setMailSended(Boolean.TRUE);
-			//forumPostReplied.setMailSendedDate(new Date());
+			forumPostReplied.setMailSended(Boolean.TRUE);
+			forumPostReplied.setMailSendedDate(new Date());
 			
 			return Boolean.TRUE;
 		} catch (Throwable throwable) {
@@ -428,6 +444,97 @@ public class MailServiceImpl implements MailService {
 			return Boolean.FALSE;
 		}
 	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	@Override
+	public Boolean sendForumPostReplyNotificationMessage(ForumPostNotified forumPostReplied, ForumPost forumPost, User currentUser) {
+		try {
+			if (!StringUtils.isBlank(currentUser.getMail())) { 
+				SimpleMailMessage message = new SimpleMailMessage();
+				message.setFrom(getMailFrom());
+				message.setTo(currentUser.getMail());
+				if (!Forum.SubType.COURSE.equals(forumPost.getForum().getSubType())) {
+					// message for a reply post
+					message.setSubject(
+							ApplicationPropertyManager.getApplicationProperty("mail.forumPostReplyNotification.subject",
+							new String[] {
+								forumPost.getUser().getFirstName(), 
+								forumPost.getUser().getLastName(), 
+								forumPost.getParentPost().getSubject()
+							},
+							"{",
+							"}"));
+					message.setText(
+							ApplicationPropertyManager.getApplicationProperty("mail.forumPostReplyNotification.text", 
+							new String[] {
+								forumPost.getUser().getFirstName(),
+								forumPost.getUser().getLastName(),
+								forumPost.getParentPost().getSubject(),
+								getForumTopicUrl(forumPost.getTopic(), Forum.SubType.COURSE.equals(forumPost.getForum().getSubType()))
+							},
+							"{",
+							"}"));
+				} else {
+					// message for a course transcription post or a course question post
+					message.setSubject(
+							ApplicationPropertyManager.getApplicationProperty("mail.courseTranscriptionNotification.subject",
+							new String[] {
+								forumPost.getUser().getFirstName(),
+								forumPost.getUser().getLastName(),
+								forumPost.getTopic().getSubject()
+							},
+							"{",
+							"}"));				
+					
+					CourseTopicOption courseTopicOption = getCourseTopicOptionDAO().getOption(forumPost.getTopic().getTopicId());
+					message.setText(
+							ApplicationPropertyManager.getApplicationProperty("mail.courseTranscriptionNotification.text", 
+							new String[] {
+								forumPost.getUser().getFirstName(),
+								forumPost.getUser().getLastName(),
+								forumPost.getTopic().getSubject(),
+								getCourseTopicUrl(courseTopicOption)
+							},
+							"{",
+							"}"));				   
+				}
+				
+				//getJavaMailSender().send(message);
+				//instead of sending the message by email sending it by internal message
+				
+				// Composing Message
+				UserMessage userMessage=new UserMessage();
+				userMessage.setSender("Staff");
+				User tempUser = currentUser;
+				userMessage.setRecipient(tempUser.getAccount());
+				userMessage.setSubject(message.getSubject());
+				userMessage.setBody(message.getText());
+				userMessage.setMessageId(null);
+				userMessage.setRecipientStatus(RecipientStatus.NOT_READ);
+				userMessage.setSendedDate(new Date());
+				
+				//Sending Message
+				getCommunityService().createNewMessage(userMessage);
+								
+			} else {
+				logger.error("Mail for ForumPost reply not sended for user " + currentUser.getAccount() + ". Check mail field on tblUser for account " + currentUser.getAccount());
+			}
+			
+			forumPostReplied.setMailSended(Boolean.TRUE);
+			forumPostReplied.setMailSendedDate(new Date());
+			
+			return Boolean.TRUE;
+		} catch (Throwable throwable) {
+			logger.error(throwable);
+			return Boolean.FALSE;
+		}
+	}
+	
+	
 	
 	/**
 	 * {@inheritDoc}
@@ -559,4 +666,13 @@ public class MailServiceImpl implements MailService {
 				+ "&completeDOM=true";		
 	}
 
+	public CommunityService getCommunityService() {
+		return communityService;
+	}
+
+	public void setCommunityService(CommunityService communityService) {
+		this.communityService = communityService;
+	}
+
+	
 }
