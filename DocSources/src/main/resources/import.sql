@@ -2033,3 +2033,10 @@ INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`,
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowImagePreviewInManuscriptViewer', 'manuscriptviewer', '/WEB-INF/jsp/teaching/ShowImagePreviewInManuscriptViewer.jsp', 0);
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowManageImagesForLessons', 'main', '/WEB-INF/jsp/teaching/ShowManageImagesForLessons.jsp', 0);
 INSERT INTO `tblApplicationTemplateAttributes` (`templateName`, `name`, `value`, `cascadeAttribute`) VALUES ('teaching/ShowUploadNewImages', 'main', '/WEB-INF/jsp/teaching/ShowUploadNewImages.jsp', 0);
+
+-- Send messages instead of emails when using the teaching module
+
+ALTER TABLE `tblUserMessage` CHANGE COLUMN `messageSubject` `messageSubject` VARCHAR(2000) NULL DEFAULT NULL AFTER `sender`;
+--UPDATE `bia`.`tblApplicationProperty` SET `value`='{0} {1} wrote in the Course Transcription Topic [{2}]' WHERE  `id`='mail.courseTranscriptionNotification.subject';
+UPDATE `bia`.`tblApplicationProperty` SET `value`='Course Transcription Topic Update [{2}]' WHERE  `id`='mail.courseTranscriptionNotification.subject';
+UPDATE `bia`.`tblApplicationProperty` SET `value`='<p>{0} {1} wrote in the Course Transcription Topic [{2}] \r\n<br>\r\nTo see it <a href="{3}" style="display:inline; color:#666ea4; margin: 0 0 0 10px">[click HERE]</a></p>' WHERE  `id`='mail.courseTranscriptionNotification.text';
