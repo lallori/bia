@@ -28,7 +28,7 @@
 			<security:authorize ifAnyGranted="ROLE_ADMINISTRATORS, ROLE_TEACHERS">
 				<c:if test="${(not empty activeCourses or activeCourse != null ) and empty courses and command.entryId > 0}">
 					<div class="choiceContentFragment">
-						<a id="createCourseTranscriptionButton" href="#" class="button_extra_large"><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.createCourseTranscription"/></a>
+						<a id="createCourseTranscriptionButton" href="#" class="button_extra_large"><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.createCourseTranscriptions"/></a>
 					</div>
 				</c:if>
 				<c:if test="${(not empty activeCourses or activeCourse != null ) and not empty courses and command.entryId > 0}">
@@ -46,7 +46,7 @@
 				-->
 				<c:if test="${not empty courses}">
 					<div class="choiceContentFragment">
-						<a id="showDocumentCourseFragments" href="#" class="button_extra_large"><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.showCourseTranscriptions"/></a>
+						<a id="showDocumentCourseFragments" href="#" class="button_extra_large"><fmt:message key="docbase.showChoiceCoursesOrDocumentsForumModal.showCourseTranscription"/></a>
 					</div>
 				</c:if>
 			</security:authorize>
