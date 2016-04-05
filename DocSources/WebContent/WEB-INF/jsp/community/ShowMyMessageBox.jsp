@@ -59,7 +59,9 @@
 		</div>
 	</div>
 	
-	<a href="#" class="deleteMessages buttonSmall"><fmt:message key="community.showMyMessageBox.delete"/></a>
+	<input type="checkbox" name="select-all" id="select-all" />Select all Messages
+	
+	<br><br><a href="#" class="deleteMessages buttonSmall"><fmt:message key="community.showMyMessageBox.delete"/></a>
 	<input type="hidden" id="idToErase" value=""/>
 
 <div id="forumPaginate">
@@ -76,6 +78,14 @@
 
 	<script type="text/javascript">
 		$j(document).ready(function() {
+			$j('#select-all').click(function(event) {   
+			    if(this.checked) {
+			        // Iterate each checkbox
+			        $j(':checkbox').each(function() {
+			            this.checked = true;                        
+			        });
+			    }
+			});
 // 			$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
 //    				$j("#chronologyDiv").html(json.chronology);
 // 				$j(".arrowForum").css('visibility','visible');
