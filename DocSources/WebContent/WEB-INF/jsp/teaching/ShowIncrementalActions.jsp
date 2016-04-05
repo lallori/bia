@@ -56,7 +56,7 @@
 	
 	<a href="#" id="showPersonalNotes" class="buttonLarge button_large"><fmt:message key="teaching.showIncrementalActions.personalNotes"/></a>
 	
-	<!-- <a href="${ShowCourseResourcesURL}" id="goCourseResources" class="buttonMedium button_medium">Lesson Resources</a>  -->
+	<a href="${ShowCourseResourcesURL}" id="goCourseResources" class="lessonResources buttonMedium button_medium">Lesson Resources</a>
 	
 	<div id="askAQuestionStep1Modal" title="Ask a Question" style="display:none"> 
 		<p>

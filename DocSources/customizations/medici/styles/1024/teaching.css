@@ -70,12 +70,17 @@ a.buttonMedium:hover, a.buttonLarge:hover, a.buttonSmall:hover {
     text-decoration: none;
     color: #6F6B69;
 }
+
+#editPostContainer .lessonResources {
+	color: blueviolet;
+	font-weight: bold;
+}
  
 .buttonMedium, .button_medium {
     width: 122px;
     height: 22px;
     display: inline-block;
-    background-image: url(${contextPath}/images/forum/button_medium.png);
+    background-image: url(/DocSources/images/forum/button_medium.png);
     background-repeat: no-repeat;
     padding: 4px 0 0 0;
     text-align: center;
@@ -87,7 +92,7 @@ a.buttonMedium:hover, a.buttonLarge:hover, a.buttonSmall:hover {
 	width: 182px;
 	height: 22px;
 	display: inline-block;
-	background-image: url(${contextPath}/images/1024/button_large.png);
+	background-image: url(/DocSources/images/1024/button_large.png);
 	background-repeat: no-repeat;
 	padding: 4px 0 0 0;
 	text-align: center;
@@ -99,7 +104,7 @@ a.buttonMedium:hover, a.buttonLarge:hover, a.buttonSmall:hover {
     width: 53px;
     height: 22px;
     display: inline-block;
-    background-image: url(${contextPath}/images/forum/button_small.png);
+    background-image: url(/DocSources/images/forum/button_small.png);
     background-repeat: no-repeat;
     padding-top: 3px;
     text-align: center;
@@ -272,7 +277,7 @@ a.buttonMedium:hover, a.buttonLarge:hover, a.buttonSmall:hover {
 /* ------------------------------------------------- Topic Icons ------------------------------------------------- */
 
 .topicIcons .editPost {
-	background-image:url(${contextPath}/images/forum/button_edit.png);
+	background-image:url(/DocSources/images/forum/button_edit.png);
 	width:20px;
 	height:20px;
 	margin: 5px 0;
@@ -280,7 +285,7 @@ a.buttonMedium:hover, a.buttonLarge:hover, a.buttonSmall:hover {
 }
 
 .topicIcons .deletePost {
-	background-image:url(${contextPath}/images/forum/button_delete.png);
+	background-image:url(/DocSources/images/forum/button_delete.png);
 	width:20px;
 	height:20px;
 	display: inline-block;
@@ -288,7 +293,7 @@ a.buttonMedium:hover, a.buttonLarge:hover, a.buttonSmall:hover {
 }
 
 .topicIcons .reportPost {
-	background-image:url(${contextPath}/images/forum/button_report.png);
+	background-image:url(/DocSources/images/forum/button_report.png);
 	width:22px;
 	height:20px;
 	display: inline-block;
@@ -296,7 +301,7 @@ a.buttonMedium:hover, a.buttonLarge:hover, a.buttonSmall:hover {
 }
 
 .topicIcons .informationPost {
-	background-image:url(${contextPath}/images/forum/button_info.png);
+	background-image:url(/DocSources/images/forum/button_info.png);
 	width:20px;
 	height:20px;
 	display: inline-block;
@@ -304,7 +309,7 @@ a.buttonMedium:hover, a.buttonLarge:hover, a.buttonSmall:hover {
 }
 
 .topicIcons .quotePost {
-	background-image:url(${contextPath}/images/forum/button_quote.png);
+	background-image:url(/DocSources/images/forum/button_quote.png);
 	width:20px;
 	height:20px;
 	display: inline-block;
