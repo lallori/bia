@@ -85,6 +85,11 @@
 			            this.checked = true;                        
 			        });
 			    }
+			    else {
+			    	$j(':checkbox').each(function() {
+			            this.checked = false;                        
+			        })
+			    }
 			});
 // 			$j.ajax({ url: '${ShowForumChronologyURL}', cache: false, success:function(json) {
 //    				$j("#chronologyDiv").html(json.chronology);
