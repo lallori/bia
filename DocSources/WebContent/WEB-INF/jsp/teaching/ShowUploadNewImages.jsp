@@ -37,6 +37,8 @@
 	<div id="uploadModal" title="[1 of 3] Prepare Upload Process" style="display: none;">
 		<p>
 			<span class="phase1">Please specify the images descriptions.</span>
+			<br><br>
+			<span class="">WARNING: Description should be <b>one word</b> without spaces, use underscores if needed (Ex. Diploma_Imperiale)</span>
 			<span class="phase2" style="display: none;">Upload process <span class="phase2_little">[it can take a while]</span></span>
 			<span class="phase3" style="display: none;">Conversion process <span class="phase3_little">[it can take a while]</span></span>
 		</p> 
