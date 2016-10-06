@@ -9,6 +9,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
 		<link rel="shortcut icon" type="image/x-icon" href="<c:url value="/images/favicon_medici.png"/>" />
+		<meta name="google-site-verification" content="3yG_45ULuCtRoXlplTjaPVFRHCEbtl_D1sSPYnVtSQk" />
 		<meta name="author" content="Lorenzo Allori &lt;lorenzo.allori@gmail.com&gt;"/>
 		<meta name="author" content="Lorenzo Pasquinelli &lt;lorenzo.pasquinelli@gmail.com&gt;"/>
 		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>
