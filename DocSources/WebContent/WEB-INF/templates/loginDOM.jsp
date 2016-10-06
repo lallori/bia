@@ -10,6 +10,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="google-site-verification" content="3yG_45ULuCtRoXlplTjaPVFRHCEbtl_D1sSPYnVtSQk" />
 		<meta name="author" content="Lorenzo Allori &lt;lorenzo.allori@gmail.com&gt;"/>
 		<meta name="author" content="Lorenzo Pasquinelli &lt;lorenzo.pasquinelli@gmail.com&gt;"/>
 		<meta name="author" content="Joana Amill &lt;joana.amill@gmail.com&gt;"/>
