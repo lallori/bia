@@ -63,8 +63,8 @@
 				<div id="text">
 						<c:if test="${place.termAccent != null}">
 						    <h3>${place.termAccent}</h3>
-						</c:if>    				
-						<c:if test="${place.termAccent = null}">
+						</c:if>
+						<c:if test="${empty place.termAccent}">
 						    <h3>${place.placeName}</h3>
 						</c:if>	    				
 						<h4>${place.parentPlace.placeNameFull}</h4>
