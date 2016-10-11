@@ -61,7 +61,12 @@
 			<c:if test="${place.placeAllId != 0}">
 				<div id="geoTitle">
 				<div id="text">
-        				<h3>${place.placeName}</h3>
+						<c:if test="${place.termAccent != null}">
+						    <h3>${place.termAccent}</h3>
+						</c:if>    				
+						<c:if test="${place.termAccent != null}">
+						    <h3>${place.placeName}</h3>
+						</c:if>	    				
 						<h4>${place.parentPlace.placeNameFull}</h4>
 						<c:if test="${place.plSource == 'TGN' && place.geogKey >= 1000000}">
             			<h5><fmt:message key="geobase.showDetailsPlace.tgnPlaceRecord"/></h5>
@@ -182,7 +187,7 @@
 					</div>
 				</c:if>
 				<div class="row">
-					<div class="item"><fmt:message key="geobase.showDetailsPlace.withAccents"/></div>
+					<div class="item"><fmt:message key="geobase.showDetailsPlace.placeType"/></div>
 					<div class="value">${place.plType}</div>
 				</div>
 				<div class="row">
